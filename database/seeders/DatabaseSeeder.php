@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\{Category, Discount, Role, User, Service, Booking};
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,40 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+       // 1) Core lookups
+       Category::factory(5)->create();
+       Discount::factory(3)->create();
+       Role::factory()->state(['name'=>'admin'])->create();
+       Role::factory()->state(['name'=>'employee'])->create();
+       Role::factory()->state(['name'=>'customer'])->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+       $adminRole    = Role::where('name','admin')->first();
+       $empRole      = Role::where('name','employee')->first();
+       $custRole     = Role::where('name','customer')->first();
+
+       // 2) Users
+       User::factory(2)->create(['role_id' => $adminRole->id]);
+       User::factory(8)->create(['role_id' => $empRole->id]);
+       User::factory(20)->create(['role_id'=> $custRole->id]);
+
+       // 3) Services & attach employees + optional discount
+       Service::factory(10)
+           ->create()
+           ->each(function($service) use($empRole){
+               // optionally assign a discount
+               if (rand(0,1)) {
+                   $service->discount_id = Discount::inRandomOrder()->first()->id;
+                   $service->save();
+               }
+               // attach 1–3 random employees
+               $employees = User::where('role_id', $empRole->id)
+                                 ->inRandomOrder()
+                                 ->take(rand(1,3))
+                                 ->pluck('id');
+               $service->employees()->attach($employees);
+           });
+
+       // 4) Bookings
+       Booking::factory(30)->create();
     }
 }
