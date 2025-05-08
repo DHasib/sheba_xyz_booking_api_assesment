@@ -20,8 +20,6 @@ return new class extends Migration
             $table->date('end_date')->index();
             $table->timestamps();
 
-            $table->index(['start_date','end_date']);
-            $table->index(['service_id','start_date','end_date']);
         });
     }
 

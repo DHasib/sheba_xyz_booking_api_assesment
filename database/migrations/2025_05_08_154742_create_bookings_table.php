@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('service_id')->constrained()->cascadeOnDelete()->index();
-            $table->foreign('user_id')->constrained()->cascadeOnDelete(); 
+            $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->string('contact_name');
             $table->string('contact_phone')->index();
             $table->string('service_location')->nullable()->index();
