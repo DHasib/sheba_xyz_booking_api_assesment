@@ -1,44 +1,62 @@
-FROM php:alpine
+# Dockerfile for Laravel 12 (PHP 8.3 FPM on Alpine)
+FROM php:8.3-fpm-alpine AS base
 
 # Arguments defined in docker-compose.yml
 ARG user
 ARG uid
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    libzip-dev \
-    -y mariadb-client \
-    libmagickcore-dev \
-    libmagickwand-dev --no-install-recommends
+# Install system dependencies & PHP build deps
+RUN apk update \
+    && apk add --no-cache \
+        bash \
+        git \
+        curl \
+        libpng-dev \
+        oniguruma-dev \
+        libxml2-dev \
+        zip \
+        unzip \
+        libzip-dev \
+        mariadb-client \
+        imagemagick-dev \
+        imagemagick \
+        shadow \
+        $PHPIZE_DEPS \
+    # Install PHP extensions
+    && pecl install imagick \
+    && docker-php-ext-enable imagick \
+    && docker-php-ext-install \
+        zip \
+        mysqli \
+        pdo_mysql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+    && docker-php-ext-enable mysqli \
+    # Cleanup build deps & caches
+    && apk del $PHPIZE_DEPS \
+    && rm -rf /var/cache/apk/*
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN docker-php-ext-install zip mysqli pdo_mysql mbstring exif pcntl bcmath gd && docker-php-ext-enable mysqli
-
-# Install Imagick extension
-RUN pecl install imagick && docker-php-ext-enable imagick
-
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
+# Create system user to run Composer and Artisan commands
+RUN useradd -u ${uid} -d /home/${user} -s /bin/bash ${user} \
+    && mkdir -p /home/${user}/.composer \
+    && chown -R ${user}:${user} /home/${user}
 
 # Set working directory
 WORKDIR /var/www
 
-USER $user
+# Switch to non-root user
+USER ${user}
 
+# after copying code into /var/www
+RUN chown -R ${user}:${user} /var/www
 
+# Expose PHP-FPM port
+EXPOSE 9000
 
-
+CMD ["php-fpm"]

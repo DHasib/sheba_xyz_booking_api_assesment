@@ -4,7 +4,7 @@ services:
         build:
             context: ./
             args:
-                user: hasib 
+                user: hasib
                 uid: 1000
             dockerfile: Dockerfile
         working_dir: /var/www
@@ -14,11 +14,11 @@ services:
             - ./:/var/www
             - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
         depends_on:
-            - mysql_db
+            - mysqlDB
         networks:
             - shebaXYZ
 
-    mysql_db:
+    mysqlDB:
         image: mysql:5.7
         ports:
             - "3307:3306"
@@ -41,7 +41,7 @@ services:
         ports:
             - 8008:80
         depends_on:
-            - mysql_db
+            - mysqlDB
             - booking_api
         volumes:
             - ./:/var/www
