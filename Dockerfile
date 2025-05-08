@@ -50,11 +50,12 @@ RUN useradd -u ${uid} -d /home/${user} -s /bin/bash ${user} \
 # Set working directory
 WORKDIR /var/www
 
+# make sure we’re root when we change ownership
+USER root
+RUN chown -R ${user}:${user} /var/www
+
 # Switch to non-root user
 USER ${user}
-
-# after copying code into /var/www
-RUN chown -R ${user}:${user} /var/www
 
 # Expose PHP-FPM port
 EXPOSE 9000
