@@ -1,0 +1,58 @@
+services:
+
+    booking_api:
+        build:
+            context: ./
+            args:
+                user: hasib 
+                uid: 1000
+            dockerfile: Dockerfile
+        working_dir: /var/www
+        environment:
+            - COMPOSER_MEMORY_LIMIT=-1
+        volumes:
+            - ./:/var/www
+            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        depends_on:
+            - mysql_db
+        networks:
+            - shebaXYZ
+
+    mysql_db:
+        image: mysql:5.7
+        ports:
+            - "3307:3306"
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - dbdata:/var/lib/mysql
+            - ./docker-compose/mysql/my.cnf:/etc/mysql/my.cnf
+            - ./docker-compose/mysql/init:/docker-entrypoint-initdb.d
+        networks:
+            - shebaXYZ
+
+    nginx:
+        image: nginx:alpine
+        ports:
+            - 8008:80
+        depends_on:
+            - mysql_db
+            - booking_api
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d/
+        networks:
+            - shebaXYZ
+
+networks:
+    shebaXYZ:
+        driver: bridge
+
+volumes:
+    dbdata:
+        driver: local
