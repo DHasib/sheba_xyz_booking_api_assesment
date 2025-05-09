@@ -14,12 +14,14 @@ services:
             - ./:/var/www
             - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
         depends_on:
-            - mysqlDB
+             mysqlDB:
+                condition: service_healthy
         networks:
             - shebaXYZ
 
     mysqlDB:
         image: mysql:5.7
+        container_name: mysqlDB
         ports:
             - "3307:3306"
         environment:
@@ -33,6 +35,11 @@ services:
             - dbdata:/var/lib/mysql
             - ./docker-compose/mysql/my.cnf:/etc/mysql/my.cnf
             - ./docker-compose/mysql/init:/docker-entrypoint-initdb.d
+        healthcheck:
+            test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1', '-u', 'root', '-proot']
+            interval: 5s
+            timeout: 5s
+            retries: 10
         networks:
             - shebaXYZ
 
