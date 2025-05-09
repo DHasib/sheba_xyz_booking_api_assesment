@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController,
-    ServiceController
+    ServiceController,
+    RoleController
 };
 
 
@@ -20,7 +21,7 @@ use App\Http\Controllers\{
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::apiResource('services', ServiceController::class);
-
+    Route::apiResource('roles', RoleController::class);
 });
 
 
