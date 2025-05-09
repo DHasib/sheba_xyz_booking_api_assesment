@@ -374,6 +374,7 @@ class BookingController extends Controller
                                     'service_id',
                                     'status',
                                     'scheduled_at',
+                                    'unique_id',
                                 ])
                                 ->with(['service:id,name'])
                                 ->orderBy('scheduled_at', 'desc')
