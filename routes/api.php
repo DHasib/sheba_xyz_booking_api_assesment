@@ -53,7 +53,7 @@ Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function () {
 
 });
 
-
+ 
 /**
  * Grouping routes that require authentication via Sanctum and the "employee" role.
  *
@@ -65,7 +65,6 @@ Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function () {
  *
  */
 Route::middleware(['auth:sanctum', 'role:employee'])->group(function () {
-
 
 });
 
