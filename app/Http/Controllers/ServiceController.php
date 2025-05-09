@@ -312,5 +312,45 @@ class ServiceController extends Controller
     }
 
 
+    /**
+     * Deletes the specified service.
+     *
+     * This method attempts to locate a service using the provided ID. If found, the service is deleted
+     * from the database and a HTTP 204 (No Content) response is returned indicating the successful deletion.
+     * If the service is not found, a HTTP 404 response with an appropriate error message is returned.
+     * For any other unexpected errors, the error details are logged and a HTTP 500 response is provided.
+     *
+     * @param string $id The identifier of the service to delete.
+     * @return \Illuminate\Http\JsonResponse Returns a JSON response indicating the result of the deletion.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException Thrown when the service is not found.
+     * @throws \Throwable Thrown if an unexpected error occurs during the deletion process.
+     */
+    public function destroy(string $id): JsonResponse
+    {
+        try {
+            $service = Service::findOrFail($id);
+            $service->delete();
+
+            return response()->json(null, 204);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Service not found.'
+            ], 404);
+
+        } catch (\Throwable $e) {
+            Log::error('ServiceController@destroy error', [
+                'id'      => $id,
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'message' => 'Failed to delete service.'
+            ], 500);
+        }
+    }
+
 
 }
