@@ -181,6 +181,7 @@ class AuthController extends Controller
                                         ],
                         'access_token' => $token,
                         'token_type'   => 'Bearer',
+                        'expires_at' => now()->addHours(3)->toDateTimeString(),
                     ];
                 });
 
@@ -200,22 +201,16 @@ class AuthController extends Controller
             }
     }
 
-
     /**
-     * Authenticates a user with provided credentials and returns a JSON response containing an access token.
+     * Handles user login by validating credentials, authenticating the user,
+     * creating a personal access token, and returning the user details along with the token.
      *
-     * This method validates the incoming HTTP request to ensure that both 'email' and 'password' fields are present and correctly formatted.
-     * It then attempts to authenticate the user using the given credentials. If authentication fails,
-     * it throws a ValidationException with a message indicating that the credentials are incorrect.
+     * @param Request $request The HTTP request containing the user's email and password.
      *
-     * Upon successful authentication, it generates a personal access token for the authenticated user with a 3-hour expiry,
-     * and returns the token along with a success message in a JSON response.
+     * @return JsonResponse A JSON response containing a success message, access token, user details,
+     *                      token type, and the token's expiration datetime.
      *
-     * @param Request $request The incoming HTTP request containing the user's credentials.
-     *
-     * @return JsonResponse A JSON response with a success message, generated access token, and token type.
-     *
-     * @throws ValidationException If the provided credentials are incorrect.
+     * @throws ValidationException If the given credentials are invalid.
      */
     public function login(Request $request): JsonResponse
     {
@@ -232,12 +227,26 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
+        // user with role name
+        $user->load('role');
+
         $token = $user->createToken($user->name, ['*'], now()->addHours(3))->plainTextToken;
+
 
         return response()->json([
             'message'      => 'Login successful',
             'access_token' => $token,
+            'user'         => [
+                                'id'        => $user->id,
+                                'name'      => $user->name,
+                                'email'     => $user->email,
+                                'address'   => $user->address,
+                                'phone'     => $user->phone,
+                                'role_id' => $user->role->id,
+                                'role_name' => $user->role->name,
+                            ],
             'token_type'   => 'Bearer',
+            'expires_at' => now()->addHours(3)->toDateTimeString(),
         ], Response::HTTP_OK);
     }
 
