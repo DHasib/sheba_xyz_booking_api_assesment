@@ -7,6 +7,28 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+# Sheba XYZ Booking API
+
+A simple Laravel-based RESTful API for managing bookings in the Sheba XYZ system.
+
+## Table of Contents
+
+- [Setup & Run Instructions](#setup--run-instructions)  
+- [API Documentation](#api-documentation)  
+  - [Authentication](#authentication)  
+  - [Bookings](#bookings)  
+- [Running Tests](#running-tests)  
+
+---
+
+## Setup & Run Instructions
+
+1. Clone the repository  
+   ```bash
+   git clone https://github.com/your-org/sheba_xyz_booking_api.git
+   cd sheba_xyz_booking_api
+   ```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
