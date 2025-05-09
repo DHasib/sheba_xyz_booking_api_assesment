@@ -130,13 +130,7 @@ class ServiceController extends Controller
                                     END AS discounted_price
                                 SQL
                         , [$today, $today])
-                    ->leftJoin('discounts', 'discounts.id', '=', 'services.discount_id')
-                    ->whereExists(function($exists){
-                        $exists->select(DB::raw(1))
-                            ->from('bookings')
-                            ->whereColumn('bookings.service_id','services.id')
-                            ->where('bookings.status','!=','confirmed');
-                    });
+                    ->leftJoin('discounts', 'discounts.id', '=', 'services.discount_id');
 
                 $services = $query->with([
                         'category:id,name',
