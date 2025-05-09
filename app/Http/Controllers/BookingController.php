@@ -158,7 +158,7 @@ class BookingController extends Controller
                                 'scheduled_at'    => $item['scheduled_at'],
                                 'status'          => 'pending',
                                 'unique_id'      => uniqid(),
-                            ])->load(['service:id,name', 'user:id,name']);
+                            ])->load(['service:id,name,description,price', 'user:id,name,email,address,phone']);
                         })
                         ->all();
                 });
