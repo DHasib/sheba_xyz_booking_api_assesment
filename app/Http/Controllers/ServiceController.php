@@ -234,4 +234,83 @@ class ServiceController extends Controller
 
 
 
+    /**
+     * Update the specified service.
+     *
+     * This method handles the update of a service record based on the provided ID. It begins by validating the
+     * incoming request data to ensure that all fields meet the defined rules, including the existence and
+     * uniqueness checks where needed. The service is then retrieved, and its attributes are updated inside a
+     * database transaction. If employee IDs are provided, their relationships are synchronized using the sync method.
+     *
+     * Upon successful update, the method returns a JSON response with a success message and the updated service data,
+     * including its associated category, discount, and employees. If the service is not found, a 404 JSON response is
+     * returned. Any unexpected errors are logged and a 500 JSON response is provided.
+     *
+     * @param  \Illuminate\Http\Request  $request  The HTTP request object containing the update data.
+     * @param  string  $id  The unique identifier of the service to be updated.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the service with the given ID does not exist.
+     * @throws \Throwable For any other errors that may occur during the update process.
+     */
+    public function update(Request $request, string $id): JsonResponse
+    {
+        $data = $request->validate([
+            'category_id'  => 'sometimes|required|exists:categories,id',
+            'name'         => 'sometimes|required|string|max:255|unique:services,name,' . $id,
+            'price'        => 'sometimes|required|numeric|min:0',
+            'description'  => 'nullable|string',
+            'discount_id'  => 'nullable|exists:discounts,id',
+            'employee_ids' => 'nullable|array',
+            'employee_ids.*' => 'integer|exists:users,id',
+        ]);
+
+        try {
+            $service = Service::findOrFail($id);
+
+            DB::transaction(function () use ($service, $data) {
+                $service->update([
+                    'category_id' => $data['category_id']  ?? $service->category_id,
+                    'name'        => $data['name']         ?? $service->name,
+                    'price'       => $data['price']        ?? $service->price,
+                    'description' => $data['description'] ?? $service->description,
+                    'discount_id' => array_key_exists('discount_id', $data)
+                                      ? $data['discount_id']
+                                      : $service->discount_id,
+                ]);
+
+                if (array_key_exists('employee_ids', $data)) {
+                    $service->employees()->sync($data['employee_ids']);
+                }
+            });
+
+            $service->load(['category', 'discount', 'employees']);
+
+            return response()->json([
+                'message' => 'Service updated successfully.',
+                'service' => $service,
+            ], 200);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Service not found.'
+            ], 404);
+
+        } catch (\Throwable $e) {
+            Log::error('ServiceController@update error', [
+                'id'      => $id,
+                'input'   => $data,
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'message' => 'Failed to update service.'
+            ], 500);
+        }
+    }
+
+
+
 }
