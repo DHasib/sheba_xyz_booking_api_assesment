@@ -22,10 +22,11 @@ use App\Http\Controllers\{
  */
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
-    Route::apiResource('services', ServiceController::class);
+    Route::apiResource('services', ServiceController::class)->only(['store', 'update', 'destroy']);
     Route::apiResource('roles', RoleController::class);
     Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('bookings', BookingController::class)->except(['store']);
+    Route::apiResource('bookings', BookingController::class)->only(['index']);
+    Route::put('bookings/status/update', [BookingController::class, 'updateBookingStatus']);
 });
 
 
@@ -42,6 +43,14 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
 
     Route::apiResource('bookings', BookingController::class)->only(['store', 'update', 'destroy']);
+});
+
+
+Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function () {
+
+    Route::apiResource('bookings', BookingController::class)->only(['show']);
+    Route::apiResource('services', ServiceController::class)->only(['index', 'show']);
+
 });
 
 
@@ -94,6 +103,9 @@ Route::withoutMiddleware(['auth:sanctum', RoleCheck::class,])->group(function ()
     Route::post('/register/employee', [AuthController::class, 'employeeRegistration']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::apiResource('services', ServiceController::class)->only(['index', 'show']);
+
+
+    Route::get('bookings/status/{uniqueId}', [BookingController::class, 'getBookingStatusByUniqueId']);
 });
 
 

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('contact_name');
             $table->string('contact_phone')->index();
             $table->string('service_location')->nullable()->index();
-            $table->enum('status',['pending','confirmed','cancelled'])->default('pending')->index();
+            $table->string('unique_id')->unique();
+            $table->enum('status',['pending','confirmed','cancelled','completed'])->default('pending')->index();
             $table->dateTime('scheduled_at')->nullable()->index();
             $table->timestamps();
         });

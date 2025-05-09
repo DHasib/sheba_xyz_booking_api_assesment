@@ -20,6 +20,7 @@ class Booking extends Model
         'service_location',
         'status',
         'scheduled_at',
+        'unique_id',
     ];
 
     /**

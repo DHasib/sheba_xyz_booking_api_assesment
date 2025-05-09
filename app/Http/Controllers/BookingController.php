@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -154,6 +155,7 @@ class BookingController extends Controller
                                 'service_location'=> $data['service_location'],
                                 'scheduled_at'    => $item['scheduled_at'],
                                 'status'          => 'pending',
+                                'unique_id'      => uniqid(),
                             ])->load(['service:id,name', 'user:id,name']);
                         })
                         ->all();
@@ -178,28 +180,41 @@ class BookingController extends Controller
     }
 
 
+
     /**
-     * Display the specified booking details.
+     * Display the specified booking.
      *
-     * This method retrieves a booking record along with its associated service and user details
-     * based on the provided booking ID. If the booking is not found, it returns a 404 JSON response.
-     * In case of any other error, it logs the error details and returns a 500 JSON response.
+     * This method retrieves a booking record by its identifier, including associated service and user details.
+     * It performs an authorization check to ensure that the current authenticated user has permissions to view
+     * the booking. Specifically, if the user is an admin or if the user is a customer who owns the booking, the booking
+     * information is returned. Otherwise, the method responds with an authorization error.
      *
-     * @param string $id The unique identifier of the booking.
+     * If the booking is not found, a JSON error message with a 404 status code is returned. In case of other errors,
+     * the exception is logged and a JSON error message with a 500 status code is returned.
      *
-     * @return \Illuminate\Http\JsonResponse A JSON response containing the booking details or an error message.
+     * @param string $id The identifier of the booking.
      *
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the booking record does not exist.
-     * @throws \Throwable If an unexpected error occurs while retrieving the booking.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the booking details or an error message.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the booking with the given ID is not found.
+     * @throws \Throwable For any other exceptions that occur during the retrieval process.
      */
     public function show(string $id): JsonResponse
     {
         try {
+
+            $user = Auth::user();
             $booking = Booking::with([
                     'service:id,name,description,price',
                     'user:id,name,email,phone,address',
                 ])
                 ->findOrFail($id);
+
+            if (! ($user->role->name === 'admin'|| ($user->role->name === 'customer' && $booking->user_id === $user->id) ))  {
+                return response()->json([
+                    'message' => 'You do not have permission to access this booking.'
+                ], 401);
+            }
 
             return response()->json($booking, 200);
 
@@ -216,7 +231,7 @@ class BookingController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Failed to retrieve booking.',
+                'message' => 'Failed to retrieve booking. ' . $e->getMessage(),
             ], 500);
         }
     }
@@ -334,4 +349,107 @@ class BookingController extends Controller
             ], 500);
         }
     }
+
+
+
+    /**
+     * Retrieve booking status information by unique booking identifier.
+     *
+     * This method fetches bookings filtered by the provided unique identifier. It selects
+     * key fields including id, service_id, status, and scheduled date, while also eager loading
+     * the associated service information (id and name only). The bookings are sorted with the
+     * most recent scheduled date first.
+     *
+     * @param mixed $id The unique booking identifier.
+     * @return \Illuminate\Http\JsonResponse JSON response containing the booking data or an error message in case of failure.
+     */
+    public function getBookingStatusByUniqueId($id)
+    {
+        try {
+            $bookings = Booking::where('unique_id', $id)
+                                ->select([
+                                    'id',
+                                    'service_id',
+                                    'status',
+                                    'scheduled_at',
+                                ])
+                                ->with(['service:id,name'])
+                                ->orderBy('scheduled_at', 'desc')
+                                ->get();
+
+            return response()->json($bookings, 200);
+
+        } catch (\Throwable $e) {
+            Log::error('BookingController@getBookingStatusByUniqueId error', [
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'message' => 'Failed to retrieve bookings.',
+            ], 500);
+        }
+    }
+
+  
+    /**
+     * Update the status of a booking.
+     *
+     * This method validates the incoming request to ensure that a valid 'status' and 'booking_id'
+     * are provided. The 'status' must be one of the allowed values: confirmed, cancelled, or completed.
+     * It then attempts to locate the booking by its ID. If found, it updates the booking's status and
+     * persists the change to the database. On success, a JSON response with the updated booking details
+     * is returned.
+     *
+     * In case the booking does not exist, a ModelNotFoundException is caught and a 404 response is returned.
+     * Any other exceptions are caught, logged, and a 500 error response is returned.
+     *
+     * @param Request $request The HTTP request instance containing:
+     *                         - status: The new status for the booking (string, required, allowed values: confirmed, cancelled, completed).
+     *                         - booking_id: The ID of the booking to be updated (integer, required, must exist in bookings).
+     *
+     * @return JsonResponse JSON response containing a message and the updated booking details on success,
+     *                      or an error message on failure.
+     *
+     * @throws ModelNotFoundException If the booking with the specified ID cannot be found.
+     * @throws \Throwable             For any other errors that occur during the update process.
+     */
+    public function updateBookingStatus(Request $request): JsonResponse
+    {
+        $request->validate([
+            'status' => 'required|string|in:confirmed,cancelled,completed',
+            'booking_id' => 'required|integer|exists:bookings,id',
+        ]);
+
+        try {
+            $booking = Booking::findOrFail($request->input('booking_id'));
+            $booking->status = $request->input('status');
+            $booking->save();
+
+            return response()->json([
+                'message' => 'Booking status updated successfully.',
+                'booking' => $booking,
+            ], 200);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Booking not found.',
+            ], 404);
+
+        } catch (\Throwable $e) {
+            Log::error('BookingController@updateBookingStatus error', [
+                'id'      => $id,
+                'input'   => $request->all(),
+                'message' => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'message' => 'Failed to update booking status.',
+            ], 500);
+        }
+    }
+
 }
+
+
