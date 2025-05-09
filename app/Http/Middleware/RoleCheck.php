@@ -30,7 +30,7 @@ class RoleCheck
         // If none of the passed roles match, block access
         if (! in_array($roleName, $roles, true)) {
             return response()->json([
-                'message' => 'Forbidden. Requires role: ' . implode(', ', $roles),
+                'message' => 'Unauthorized. Insufficient permissions to access this resource.',
             ], 403);
         }
 
