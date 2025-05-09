@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\BookingStatusChanged;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -391,7 +393,7 @@ class BookingController extends Controller
         }
     }
 
-  
+
     /**
      * Update the status of a booking.
      *
@@ -422,9 +424,26 @@ class BookingController extends Controller
         ]);
 
         try {
-            $booking = Booking::findOrFail($request->input('booking_id'));
+            $id = $request->input('booking_id');
+            $booking = Booking::findOrFail($id);
+
+            $oldStatus = $booking->status;
             $booking->status = $request->input('status');
-            $booking->save();
+
+            DB::transaction(function () use ($booking) {
+                $booking->save();
+            });
+
+            // Only notify on confirmed or cancelled (and only if it actually changed)
+            if (in_array($booking->status, ['confirmed','cancelled','completed'])
+                && $booking->status !== $oldStatus)
+            {
+                // eager-load relations for the email
+                // dd($booking->user->email);
+                $booking->load(['user','service']);
+                Mail::to($booking->user->email)
+                    ->send(new BookingStatusChanged($booking));
+            }
 
             return response()->json([
                 'message' => 'Booking status updated successfully.',
@@ -445,7 +464,7 @@ class BookingController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Failed to update booking status.',
+                'message' => "Failed to update booking status. {$e->getMessage()}",
             ], 500);
         }
     }
