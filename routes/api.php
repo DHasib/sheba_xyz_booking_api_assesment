@@ -3,17 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController,
+    ServiceController
 };
 
-Route::get('/', function () {
-
-    return [
-        'message' => 'Hello World',
-        'status' => 200,
-    ];
-
-
-});
 
 /**
  * API Routes - Admin Protected Routes
@@ -27,9 +19,11 @@ Route::get('/', function () {
  */
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('services', ServiceController::class);
 
 });
+
+
 
 /**
  * API Routes Documentation:
@@ -42,9 +36,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
  */
 Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
 
-    Route::post('/logout', [AuthController::class, 'logout']);
 
 });
+
 
 /**
  * Grouping routes that require authentication via Sanctum and the "employee" role.
@@ -59,7 +53,6 @@ Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:employee'])->group(function () {
 
 
-    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 
@@ -67,23 +60,48 @@ Route::middleware(['auth:sanctum', 'role:employee'])->group(function () {
 
 
 /**
- * API Authentication Endpoints
+ * API Routes - Public Endpoints
  *
- * 1. POST /register
- *    - Controller method: AuthController::customerRegistration
- *    - Purpose: Registers a new customer.
+ * This set of routes is defined without applying the 'auth:sanctum' and 'RoleCheck' middleware,
+ * making these endpoints publicly accessible.
  *
- * 2. POST /register/employee
- *    - Controller method: AuthController::employeeRegistration
- *    - Purpose: Registers a new employee.
+ * Endpoints:
+ *   - POST /register
+ *       -> Registers a new customer (handled by AuthController::customerRegistration).
  *
- * 3. POST /login
- *    - Controller method: AuthController::login
- *    - Purpose: Logs in a user.
+ *   - POST /register/employee
+ *       -> Registers a new employee (handled by AuthController::employeeRegistration).
+ *
+ *   - POST /login
+ *       -> Authenticates a user and provides login functionality (handled by AuthController::login).
+ *
+ *   - GET /services
+ *       -> Retrieves a list of services (handled by ServiceController::index).
+ *
+ *   - GET /services/{service}
+ *       -> Retrieves details of a specific service (handled by ServiceController::show).
+ *
+ * Note:
+ *   The "services" resource routes are limited to only the 'index' and 'show' actions.
  */
-Route::post('/register', [AuthController::class, 'customerRegistration']);
-Route::post('/register/employee', [AuthController::class, 'employeeRegistration']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::withoutMiddleware(['auth:sanctum', RoleCheck::class,])->group(function () {
+    Route::post('/register', [AuthController::class, 'customerRegistration']);
+    Route::post('/register/employee', [AuthController::class, 'employeeRegistration']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::apiResource('services', ServiceController::class)->only(['index', 'show']);
+});
+
+
+/**
+ * POST /logout
+ *
+ * This endpoint logs out the authenticated user by calling the logout method in the AuthController.
+ * It ensures that only authenticated users (using the 'auth:sanctum' middleware) can access this route.
+ *
+ */
+Route::post('/logout', [AuthController::class, 'logout'])
+     ->middleware('auth:sanctum');
+
 
 
 

@@ -19,7 +19,7 @@ class RoleCheck
     {
         $user = Auth::user();
 
-        if (! $user) {
+        if (!$user) {
             return response()->json([
                 'message' => 'Not authenticated.'
             ], 401);
@@ -28,7 +28,7 @@ class RoleCheck
         $roleName = $user->role->name;
 
         // If none of the passed roles match, block access
-        if (! in_array($roleName, $roles, true)) {
+        if (!in_array($roleName, $roles, true)) {
             return response()->json([
                 'message' => 'Unauthorized. Insufficient permissions to access this resource.',
             ], 403);
