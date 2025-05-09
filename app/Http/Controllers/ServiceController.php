@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ServiceController extends Controller
 {
-
-
     /**
      * Store a new service.
      *
