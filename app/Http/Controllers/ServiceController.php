@@ -12,8 +12,22 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class ServiceController extends Controller
 {
 
+
     /**
-     * Store a newly created service in storage.
+     * Store a new service.
+     *
+     * This method validates the incoming request data, creates a new service record,
+     * associates any provided employee IDs with the service, and loads related models
+     * (category, discount, and employees). The entire operation is performed within a
+     * database transaction to ensure data integrity. If an error occurs during the process,
+     * it logs the error and returns an HTTP 500 response.
+     *
+     * @param Request $request The HTTP request instance containing the service data.
+     *
+     * @return JsonResponse Returns a JSON response with a success message and the service data on successful creation,
+     *                       or an error message on failure.
+     *
+     * @throws \Throwable If an exception occurs during the database transaction.
      */
     public function store(Request $request): JsonResponse
     {
@@ -141,6 +155,81 @@ class ServiceController extends Controller
                 'message' => 'Failed to retrieve services.'
             ], 500);
         }
+    }
+
+
+    /**
+     * Retrieve a service by its ID along with its associated category, discount, and employees.
+     *
+     * This method attempts to fetch a service record from the database using the provided ID.
+     * It includes a calculation for the discounted price based on the current date and the specific
+     * discount conditions (either percentage-based or fixed amount). The method also eagerly loads
+     * related data such as the service category, discounts, and employees.
+     *
+     * @param string $id The unique identifier of the service.
+     *
+     * @return JsonResponse A JSON response containing the service details or an error message.
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If no service matching the provided ID is found.
+     * @throws \Throwable For any other errors encountered during the execution.
+     */
+    public function show(string $id): JsonResponse
+        {
+            try {
+                $today = now()->toDateString();
+
+                $service = Service::query()
+                    ->select([
+                        'services.id',
+                        'services.name',
+                        'services.price',
+                        'services.category_id',
+                        'services.discount_id',
+                    ])
+                    ->selectRaw(<<<SQL
+                        CASE
+                        WHEN discounts.start_date <= ?
+                            AND discounts.end_date   >= ?
+                        THEN
+                            CASE
+                            WHEN discounts.type = 'percentage'
+                                THEN ROUND(services.price * (1 - discounts.value/100), 2)
+                            WHEN discounts.type = 'fixed'
+                                THEN ROUND(services.price - discounts.value, 2)
+                            ELSE 0
+                            END
+                        ELSE 0
+                        END AS discounted_price
+                    SQL,
+                    [$today, $today]
+                    )
+                    ->leftJoin('discounts', 'discounts.id', '=', 'services.discount_id')
+                    ->with([
+                        'category:id,name',
+                        'discount:id,value,type,start_date,end_date',
+                        'employees:id,name,description',
+                    ])
+                    ->where('services.id', $id)
+                    ->firstOrFail();
+
+                return response()->json($service, 200);
+
+            } catch (ModelNotFoundException $e) {
+                return response()->json([
+                    'message' => 'Service not found.',
+                ], 404);
+
+            } catch (\Throwable $e) {
+                Log::error('ServiceController@show error', [
+                    'id'      => $id,
+                    'message' => $e->getMessage(),
+                    'trace'   => $e->getTraceAsString(),
+                ]);
+
+                return response()->json([
+                    'message' => 'Failed to retrieve service.',
+                ], 500);
+            }
     }
 
 
