@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     AuthController,
     ServiceController,
-    RoleController
+    RoleController,
+    CategoryController
 };
 
 
@@ -22,6 +23,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::apiResource('services', ServiceController::class);
     Route::apiResource('roles', RoleController::class);
+    Route::apiResource('categories', CategoryController::class);
 });
 
 
