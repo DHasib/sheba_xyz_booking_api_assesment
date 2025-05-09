@@ -77,29 +77,25 @@ class ServiceController extends Controller
     }
 
 
+
     /**
-     * Retrieve a paginated list of services that have active non-confirmed bookings.
+     * Retrieve a paginated list of services with calculated discounted prices.
      *
-     * This method fetches services while calculating a "discounted_price" if the service has an associated,
-     * valid discount. The discount is only applied if today's date is within the discount's start and end dates.
-     * Two types of discount calculations are supported:
-     * - "percentage": Computes the discounted price by reducing the service price by a given percentage.
-     * - "fixed": Computes the discounted price by subtracting a fixed discount amount from the service price.
+     * This method fetches services along with their relationships (category, discount, and employees) using eager loading.
+     * It calculates a virtual field "discounted_price" based on current date and discount validity:
+     *   - If a discount is active (i.e., the current date falls between the discount's start_date and end_date),
+     *     the discounted price is computed based on the discount type:
+     *       - 'percentage': computes as services.price * (1 - discounts.value/100)
+     *       - 'fixed': computes as services.price - discounts.value
+     *   - Otherwise, the discounted_price is set to 0.
      *
-     * Additionally, the method ensures that the services returned have at least one booking record that is not
-     * confirmed. The response includes associated category, discount, and employee details.
+     * The result is paginated with 15 items per page and returned as a JSON response.
      *
-     * On success, it returns a JSON response with the paginated results (15 services per page).
-     * If an exception occurs, the error is logged and a JSON response with an error message is returned.
-     *
-     * @return \Illuminate\Http\JsonResponse JSON response containing paginated services data or an error message.
-     *
-     * @throws \Throwable If an unexpected error occurs during the service retrieval process.
+     * @return \Illuminate\Http\JsonResponse The JSON response containing the paginated list of services or an error message on failure.
      */
     public function index(): JsonResponse
     {
         try {
-            //get services where booking status != confirmed
             // if has discount within valid date range then create virtual field to show discounted price. and also check discount calculation type based on type on discount field
                 $today  = now()->toDateString();
                 $query = Service::select([
