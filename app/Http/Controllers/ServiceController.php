@@ -335,7 +335,9 @@ class ServiceController extends Controller
             $service = Service::findOrFail($id);
             $service->delete();
 
-            return response()->json(null, 204);
+            return response()->json([
+                'message' => 'Service Deleted successfully.'
+            ], 204);
 
         } catch (ModelNotFoundException $e) {
             return response()->json([
