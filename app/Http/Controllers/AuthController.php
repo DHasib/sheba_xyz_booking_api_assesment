@@ -201,6 +201,22 @@ class AuthController extends Controller
     }
 
 
+    /**
+     * Authenticates a user with provided credentials and returns a JSON response containing an access token.
+     *
+     * This method validates the incoming HTTP request to ensure that both 'email' and 'password' fields are present and correctly formatted.
+     * It then attempts to authenticate the user using the given credentials. If authentication fails,
+     * it throws a ValidationException with a message indicating that the credentials are incorrect.
+     *
+     * Upon successful authentication, it generates a personal access token for the authenticated user with a 3-hour expiry,
+     * and returns the token along with a success message in a JSON response.
+     *
+     * @param Request $request The incoming HTTP request containing the user's credentials.
+     *
+     * @return JsonResponse A JSON response with a success message, generated access token, and token type.
+     *
+     * @throws ValidationException If the provided credentials are incorrect.
+     */
     public function login(Request $request): JsonResponse
     {
         $data = $request->validate([
@@ -225,6 +241,16 @@ class AuthController extends Controller
         ], Response::HTTP_OK);
     }
 
+    /**
+     * Logs out the authenticated user by deleting the current access token.
+     *
+     * This method retrieves the current user's token from the request and deletes it,
+     * effectively logging the user out. It then returns a JSON response confirming the logout.
+     *
+     * @param \Illuminate\Http\Request $request The HTTP request instance containing the user and token.
+     *
+     * @return \Illuminate\Http\JsonResponse A JSON response indicating a successful logout.
+     */
     public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
