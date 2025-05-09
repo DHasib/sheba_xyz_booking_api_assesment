@@ -10,15 +10,27 @@ use App\Http\Controllers\{
 };
 
 
+
 /**
- * API Routes - Admin Protected Routes
+ * API Routes Documentation
  *
- * This route group is protected using two middlewares:
- *  - "auth:sanctum": Ensures the user is authenticated via Laravel Sanctum.
- *  - "role:admin": Ensures the authenticated user has an "admin" role.
+ * This group of API routes is protected by Sanctum authentication and a role-based middleware
+ * that restricts access to users with the "admin" role.
  *
- * This safeguard ensures that only authorized admins can access these routes.
+ * Routes:
+ * - Services:
+ *     - Provides endpoints to store, update, and destroy service records.
+ *     - Only the store, update, and destroy methods are exposed.
  *
+ * - Roles:
+ *     - Full resource controller endpoints for role management.
+ *
+ * - Categories:
+ *     - Full resource controller endpoints for managing categories.
+ *
+ * - Bookings:
+ *     - Exposes only the index method of the resource controller to list bookings.
+ *     - Includes a custom PUT endpoint ('bookings/status/update') to update the status of a booking.
  */
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
@@ -31,14 +43,22 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
 
 
+
 /**
- * API Routes Documentation:
+ * API Routes for Booking Management
  *
- * This route group is protected by:
- * - "auth:sanctum": Ensures the user is authenticated using Laravel Sanctum.
- * - "role:customer": Ensures that the authenticated user has the "customer" role.
+ * This route group applies the following middleware:
+ * - auth:sanctum: Ensures the user is authenticated via Sanctum.
+ * - role:customer: Verifies that the authenticated user has the 'customer' role.
  *
- *  This safeguard ensures that only authorized customers can access these routes.
+ * Within this group, an API resource route for the 'bookings' endpoint is defined,
+ * but only the following actions are available:
+ * - store: To create a new booking.
+ * - update: To modify an existing booking.
+ * - destroy: To delete an existing booking.
+ *
+ * The routes are defined in the API routes file located at:
+ * /c:/Users/dkhas/Desktop/sheba_xyz_booking_api_assesment_mdhasib522@gmail.com/routes/api.php.
  */
 Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
 
@@ -46,6 +66,31 @@ Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
 });
 
 
+
+
+
+/**
+ * API Route Definitions with Middleware Protection
+ *
+ * This group of routes applies the following middleware:
+ *   - auth:sanctum: Ensures that the request is authenticated using Laravel Sanctum.
+ *   - role:customer,admin: Restricts access to users that have either the "customer" or "admin" role.
+ *
+ * Routes Included:
+ *   - Bookings:
+ *       * Endpoint: /bookings/{booking}
+ *       * HTTP Verb: GET (show)
+ *       * Controller: BookingController
+ *       * Description: Retrieves details of a specific booking.
+ *
+ *   - Services:
+ *       * Endpoints:
+ *            - /services (index)
+ *            - /services/{service} (show)
+ *       * HTTP Verbs: GET (index, show)
+ *       * Controller: ServiceController
+ *       * Description: Retrieves a list of services or details of a specific service.
+ */
 Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function () {
 
     Route::apiResource('bookings', BookingController::class)->only(['show']);
@@ -53,7 +98,7 @@ Route::middleware(['auth:sanctum', 'role:customer,admin'])->group(function () {
 
 });
 
- 
+
 /**
  * Grouping routes that require authentication via Sanctum and the "employee" role.
  *
@@ -72,30 +117,41 @@ Route::middleware(['auth:sanctum', 'role:employee'])->group(function () {
 
 
 
+
 /**
- * API Routes - Public Endpoints
+ * API Routes without Authentication and Role Middleware
  *
- * This set of routes is defined without applying the 'auth:sanctum' and 'RoleCheck' middleware,
- * making these endpoints publicly accessible.
+ * This file defines public API endpoints that bypass the default middleware
+ * protections such as 'auth:sanctum' and 'RoleCheck'. These endpoints are intended
+ * for actions where user authentication is not required.
  *
  * Endpoints:
- *   - POST /register
- *       -> Registers a new customer (handled by AuthController::customerRegistration).
  *
- *   - POST /register/employee
- *       -> Registers a new employee (handled by AuthController::employeeRegistration).
+ * 1. Registration and Login:
+ *    - POST /register
+ *      - Endpoint to register a new customer.
  *
- *   - POST /login
- *       -> Authenticates a user and provides login functionality (handled by AuthController::login).
+ *    - POST /register/employee
+ *      - Endpoint to register a new employee.
  *
- *   - GET /services
- *       -> Retrieves a list of services (handled by ServiceController::index).
+ *    - POST /login
+ *      - Endpoint for users to login.
  *
- *   - GET /services/{service}
- *       -> Retrieves details of a specific service (handled by ServiceController::show).
+ * 2. Services:
+ *    - API Resource for 'services' limited to index and show methods:
+ *      - GET /services
+ *         - Retrieves a list of services.
+ *      - GET /services/{id}
+ *         - Retrieves details for a specific service identified by its ID.
+ *
+ * 3. Bookings:
+ *    - GET /bookings/status/{uniqueId}
+ *      - Retrieves the current booking status using a unique identifier.
  *
  * Note:
- *   The "services" resource routes are limited to only the 'index' and 'show' actions.
+ * All of these endpoints are grouped together to explicitly bypass the typical
+ * authentication and role-checking middleware. Use caution when exposing such
+ * routes in production environments.
  */
 Route::withoutMiddleware(['auth:sanctum', RoleCheck::class,])->group(function () {
     Route::post('/register', [AuthController::class, 'customerRegistration']);
