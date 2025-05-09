@@ -76,6 +76,7 @@ class ServiceController extends Controller
         }
     }
 
+
     /**
      * Retrieve a paginated list of services that have active non-confirmed bookings.
      *
@@ -107,6 +108,7 @@ class ServiceController extends Controller
                         'services.price',
                         'services.category_id',
                         'services.discount_id',
+                        'services.description',
                     ])
                         // calculate discounted_price if discount is active
                         ->selectRaw(
@@ -185,6 +187,7 @@ class ServiceController extends Controller
                         'services.price',
                         'services.category_id',
                         'services.discount_id',
+                        'services.description',
                     ])
                     ->selectRaw(<<<SQL
                         CASE
