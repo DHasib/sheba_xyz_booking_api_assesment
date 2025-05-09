@@ -5,7 +5,8 @@ use App\Http\Controllers\{
     AuthController,
     ServiceController,
     RoleController,
-    CategoryController
+    CategoryController,
+    BookingController
 };
 
 
@@ -24,6 +25,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::apiResource('services', ServiceController::class);
     Route::apiResource('roles', RoleController::class);
     Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('bookings', BookingController::class)->except(['store']);
 });
 
 
@@ -39,7 +41,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
  */
 Route::middleware(['auth:sanctum', 'role:customer'])->group(function () {
 
-
+    Route::apiResource('bookings', BookingController::class)->only(['store', 'update', 'destroy']);
 });
 
 
