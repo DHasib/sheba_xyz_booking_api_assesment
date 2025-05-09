@@ -33,6 +33,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'address'    => $this->faker->address(),
             'phone'      => $this->faker->phoneNumber(),
+            'description' => $this->faker->sentence(),
             'created_at'  => now(),
             'updated_at'  => now(),
         ];
