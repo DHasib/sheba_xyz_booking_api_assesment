@@ -136,8 +136,8 @@ class Booking_Creation_Api_Test extends TestCase
             /* -------------------------------------------------
             | 2) Seed one service to book
             * ------------------------------------------------- */
-            $category = Category::factory()->create();
-            $service  = Service::factory()->create(['category_id' => $category->id]);
+
+            $service  = Service::factory()->create(['category_id' => 3]);
 
             /* -------------------------------------------------
             | 3) Authenticate as that customer
