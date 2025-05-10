@@ -24,8 +24,7 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 
 - [Setup & Run Instructions](#setup--run-instructions)  
 - [API Documentation](#api-documentation)
-  - [Admin Credential](#admin-credential)  
-  - [Authorization Script](#authentication)  
+  - [Admin Credential](#admin-credential) 
   - [Postman Api Collections](#postman-api-collections)
   - [Project Entity Relationship Diagram (ERD)](#erd)  
 - [Running Tests](#running-tests)  
@@ -116,10 +115,6 @@ steps:
 'email' = admin@example.com
 'password' = P@ssword
 ```
-
-## Authentication
-
-**Not Done Yet to list out Api Documentation But functionally Done Everything**
 
 
 ## Postman Api Collections
