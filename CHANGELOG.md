@@ -1,6 +1,10 @@
 # Release Notes
 
-## [Unreleased](https://github.com/laravel/laravel/compare/v12.0.7...12.x)
+## [Unreleased](https://github.com/laravel/laravel/compare/postman_api_collections_and_env_v0.0.1...main)
+
+## [postman_api_collections_and_env_v0.0.1](https://github.com/laravel/laravel/compare/v12.0.7...postman_api_collections_and_env_v0.0.1) - 2025-05-10
+
+**Full Changelog**: https://github.com/DHasib/sheba_xyz_booking_api_assesment/commits/postman_api_collections_and_env_v0.0.1
 
 ## [v12.0.7](https://github.com/laravel/laravel/compare/v12.0.6...v12.0.7) - 2025-04-15
 
