@@ -124,7 +124,14 @@ steps:
 
 ## Bookings
 
-**Not Done Yet to list out Api Documentation But functionally Done Everything**
+Download and import these files into Postman:
+
+- **Postman Collection**  
+  [Download Collection JSON](./Sheba.XYZ Booking API Collections_mdhasib522@gmail.com.postman_collection.json)
+
+- **Postman Environment**  
+  [Download Environment JSON](./booking_api_env.postman_environment_mdhasib522@gmail.com.json)
+
 
 
 ## ERD
