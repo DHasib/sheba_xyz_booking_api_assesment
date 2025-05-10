@@ -38,8 +38,7 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 
 ## Setup & Run Instructions
 
-
-## 1 · Clone the repo
+ **1 · Clone the repo**
 
 ```bash
 git clone https://github.com/DHasib/sheba_xyz_booking_api_assesment.git
@@ -48,7 +47,7 @@ cd booking‑api
 
 
 
-## 2 · One‑shot setup *(build → up → composer install → .env → migrate & seed)*
+**2 · One‑shot setup (build → up → composer install → .env → migrate & seed)**
 
 ```bash
 make setup
@@ -66,7 +65,7 @@ When the command finishes, the API is available at **[http://localhost:8008](htt
 
 ---
 
-## 3 · Daily workflow cheatsheet
+**3 · Daily workflow cheatsheet**
 
 | Task                                    | Command                 |
 | --------------------------------------- | ----------------------- |
@@ -82,7 +81,7 @@ When the command finishes, the API is available at **[http://localhost:8008](htt
 
 ---
 
-## 4 · Troubleshooting
+**4 · Troubleshooting**
 
 ### Containers can’t see MySQL (`getaddrinfo ENOTFOUND mysqlDB`)
 
@@ -99,7 +98,7 @@ After editing `.env`, run `make clear` to flush cached config.
 
 ---
 
-## 5 · CI / CD hint
+**5 · CI / CD hint**
 
 Because the Makefile is deterministic, GitHub Actions / GitLab CI only need:
 
@@ -115,11 +114,9 @@ steps:
 
 
 
-## running-tests
+## Running-Tests
 
----
-
-# One‑shot Run the Test*
+**One‑shot To Run All the Test**
 
 ```bash
 make test
