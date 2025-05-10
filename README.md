@@ -1,6 +1,6 @@
-# Sheba XYZ Booking API - Local Development Guide
+# Sheba XYZ Booking API Assesment- Local Development Guide
 
-A simple Laravel-based RESTful API for managing bookings in the Sheba XYZ system.
+A simple Laravel-based RESTful API for managing bookings in the Sheba XYZ Int. Assesment system.
 
  
 
