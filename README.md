@@ -25,8 +25,8 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 - [Setup & Run Instructions](#setup--run-instructions)  
 - [API Documentation](#api-documentation)
   - [Admin Credential](#admin-credential)  
-  - [Authentication](#authentication)  
-  - [Bookings](#bookings)
+  - [Authorization Script](#authentication)  
+  - [Postman Api Collections ](#bookings)
   - [Project Entity Relationship Diagram (ERD)](#erd)  
 - [Running Tests](#running-tests)  
 
@@ -37,7 +37,7 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 
 ```bash
 git clone https://github.com/DHasib/sheba_xyz_booking_api_assesment.git
-cd booking‑api
+cd sheba_xyz_booking_api_assesment
 ```
 
 
