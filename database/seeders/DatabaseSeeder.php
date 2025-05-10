@@ -30,6 +30,10 @@ class DatabaseSeeder extends Seeder
        User::factory(8)->create(['role_id' => $empRole->id]);
        User::factory(20)->create(['role_id'=> $custRole->id]);
 
+       // create a single admin user with known credentials
+       User::factory()->admin()->create();
+
+
        // 3) Services & attach employees + optional discount
        Service::factory(10)
            ->create()
