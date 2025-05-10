@@ -1,5 +1,5 @@
 # Dockerfile for Laravel 12 (PHP 8.3 FPM on Alpine)
-FROM php:8.3-fpm-alpine AS base
+FROM php:8.4-fpm-alpine AS base
 
 # Arguments defined in docker-compose.yml
 ARG user
@@ -57,7 +57,4 @@ RUN chown -R ${user}:${user} /var/www
 # Switch to non-root user
 USER ${user}
 
-# Expose PHP-FPM port
-EXPOSE 9000
 
-CMD ["php-fpm"]

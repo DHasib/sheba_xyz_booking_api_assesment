@@ -2,27 +2,28 @@
 #  Laravel / Docker helper Makefile
 # -------------------------------------------------
 SERVICE      ?= booking_api          # docker-compose service name
+NGINX        ?= nginx          # docker-compose service name
 COMPOSE       = docker compose       # alias (v2 syntax)
 PHP          ?= php                  # inside-container PHP alias
 
 # Default target: full setup (build → up → install → env → migrate)
 .PHONY: setup
-setup: build up install env migrate
+setup: env build up install migrate
 
 # -------------------------------------------------
 # 1) Docker build & up
 # -------------------------------------------------
 .PHONY: build
 build:
-	$(COMPOSE) build $(SERVICE)
+	$(COMPOSE) build $(SERVICE) $(NGINX)
 
 .PHONY: up
 up:
-	$(COMPOSE) up -d $(SERVICE)
+	$(COMPOSE) up -d $(SERVICE) $(NGINX)
 
 .PHONY: stop
 stop:
-	$(COMPOSE) stop $(SERVICE)
+	$(COMPOSE) stop $(SERVICE) $(NGINX)
 
 .PHONY: down
 down:
@@ -37,10 +38,11 @@ install:
 
 # -------------------------------------------------
 # 3) Copy env template → .env (inside container)
+# $(COMPOSE) exec $(SERVICE) sh -c 'if [ ! -f .env ]; then cp .env.dev .env; fi'
 # -------------------------------------------------
 .PHONY: env
 env:
-	$(COMPOSE) exec $(SERVICE) sh -c 'if [ ! -f .env ]; then cp .env.dev .env; fi'
+	sh -c 'if [ ! -f .env ]; then cp .env.dev .env; fi'
 
 # -------------------------------------------------
 # 4) DB migration + seed (inside container)
