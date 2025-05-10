@@ -11,9 +11,6 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 
 
 
----
-
-
 
 ## Prerequisites
 
@@ -38,22 +35,20 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
   - [Bookings](#bookings)  
 - [Running Tests](#running-tests)  
 
----
 
 ## Setup & Run Instructions
 
----
 
-\## 1 · Clone the repo
+## 1 · Clone the repo
 
 ```bash
 git clone https://github.com/DHasib/sheba_xyz_booking_api_assesment.git
 cd booking‑api
 ```
 
----
 
-\## 2 · One‑shot setup *(build → up → composer install → .env → migrate & seed)*
+
+## 2 · One‑shot setup *(build → up → composer install → .env → migrate & seed)*
 
 ```bash
 make setup
@@ -71,7 +66,7 @@ When the command finishes, the API is available at **[http://localhost:8008](htt
 
 ---
 
-\## 3 · Daily workflow cheatsheet
+## 3 · Daily workflow cheatsheet
 
 | Task                                    | Command                 |
 | --------------------------------------- | ----------------------- |
@@ -87,7 +82,7 @@ When the command finishes, the API is available at **[http://localhost:8008](htt
 
 ---
 
-\## 4 · Troubleshooting
+## 4 · Troubleshooting
 
 ### Containers can’t see MySQL (`getaddrinfo ENOTFOUND mysqlDB`)
 
@@ -104,7 +99,7 @@ After editing `.env`, run `make clear` to flush cached config.
 
 ---
 
-\## 5 · CI / CD hint
+## 5 · CI / CD hint
 
 Because the Makefile is deterministic, GitHub Actions / GitLab CI only need:
 
@@ -120,17 +115,16 @@ steps:
 
 
 
-## About Laravel
+## running-tests
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# One‑shot Run the Test*
+
+```bash
+make test
+```
+
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
