@@ -127,10 +127,10 @@ steps:
 Download and import these files into Postman:
 
 - **Postman Collection**  
-  [Download Collection JSON](https://github.com/DHasib/sheba_xyz_booking_api_assesment/Sheba.XYZ Booking API Collections_mdhasib522@gmail.com.postman_collection.json)
+  [Download Collection](./Sheba.XYZ%20Booking%20API%20Collections_mdhasib522@gmail.com.postman_collection.json)
 
-- **Postman Environment**  
-  [Download Environment JSON](https://github.com/DHasib/sheba_xyz_booking_api_assesment/booking_api_env.postman_environment_mdhasib522@gmail.com.json)
+- **Environment (Env Test)**  
+  [Download Env Test](./booking_api_env.postman_environment_mdhasib522@gmail.com.json)
 
 
 
