@@ -1,0 +1,2146 @@
+{
+	"info": {
+		"_postman_id": "507b6cb9-fd01-485a-8a69-29c50db082b9",
+		"name": "Sheba.XYZ Booking API Collections Copy 2",
+		"description": "# Sheba.XYZ Booking API\n\nWelcome to the Sheba.XYZ Booking API documentation. This API allows you to manage users, services, and roles within the Sheba.XYZ platform.\n\n## Base URL\nAll endpoints are relative to:\n```\n{{booking_api_url}}\n```\n\n## Authentication\n- All protected endpoints require a Bearer token.\n- Obtain a token via the **Login** endpoint.\n- Include the token in `Authorization: Bearer {{token}}` header.\n\n## Endpoints\n\n### User\n- **Register Customer**: `POST /api/register`\n- **Register Employee**: `POST /api/register/employee`\n- **Login**: `POST /api/login`\n- **Log Out**: `POST /api/logout`\n\n### Services\n- **Get Services Collection**: `GET /api/services`\n- **Get a Service Collection**: `GET /api/services/:id`\n- **Create a Service Collection**: `POST /api/services`\n- **Update a Service Collection**: `PUT /api/services/:id`\n- **Delete a Service Collection**: `DELETE /api/services/:id`\n\n### User Roles\n- **Get Roles Collection**: `GET /api/roles`\n- **Get a Role Collection**: `GET /api/roles/:id`\n- **Create a Role Collection**: `POST /api/roles`\n- **Update a Role Collection**: `PUT /api/roles/:id`\n- **Delete a Role Collection**: `DELETE /api/roles/:id`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "37366320"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Register Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"hasib3\",\r\n    \"email\": \"hasib3@gmail.com\",\r\n    \"phone\": \"05487525285\",\r\n    \"password\": \"P@ssword\",\r\n    \"password_confirmation\": \"P@ssword\"\r\n\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/register",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 201",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"hasib\",\r\n    \"email\": \"hasib@gmail.com\",\r\n    \"phone\": \"0548752585\",\r\n    \"password\": \"P@ssword\",\r\n    \"password_confirmation\": \"P@ssword\"\r\n\r\n\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{booking_api_url}}/api/register",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User registered successfully\",\n    \"user\": {\n        \"id\": 36,\n        \"name\": \"hasib9\",\n        \"email\": \"hasib75@gmail.com\",\n        \"address\": null,\n        \"phone\": \"877525885\",\n        \"role_id\": 3,\n        \"role_name\": \"customer\"\n    },\n    \"access_token\": \"7|QrYmUmELPqKFsxqTKZt3BYF6cihgr24eMphJArjce3d7bafc\",\n    \"token_type\": \"Bearer\",\n    \"expires_at\": \"2025-05-10 19:54:49\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Register Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"hasib\",\r\n    \"email\": \"employee2@gmail.com\",\r\n    \"phone\": \"5487252585\",\r\n    \"password\": \"P@ssword\",\r\n    \"password_confirmation\": \"P@ssword\",\r\n    \"role_id\": 2\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/register/employee",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 201",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"hasib\",\r\n    \"email\": \"employee2@gmail.com\",\r\n    \"phone\": \"5487252585\",\r\n    \"password\": \"P@ssword\",\r\n    \"password_confirmation\": \"P@ssword\",\r\n    \"role_id\": 2\r\n\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{booking_api_url}}/api/register/employee",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User registered successfully\",\n    \"user\": {\n        \"id\": 37,\n        \"name\": \"hasib\",\n        \"email\": \"employee2@gmail.com\",\n        \"address\": null,\n        \"phone\": \"5487252585\",\n        \"role_id\": 2,\n        \"role_name\": \"employee\"\n    },\n    \"access_token\": \"8|3672yz4Tj0r9Jix96vACBXSf7zF1q8dHHl8hsFzO319ef62d\",\n    \"token_type\": \"Bearer\",\n    \"expires_at\": \"2025-05-10 19:56:25\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": " {{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"email\": \"hasib@gmail.com\",\r\n    \"email\": \"serenity.prohaska@example.net\",\r\n    \"password\": \"P@ssword\" \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/login",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": " {{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    // \"email\": \"hasib@gmail.com\",\r\n    \"email\": \"serenity.prohaska@example.net\",\r\n    \"password\": \"P@ssword\" \r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{booking_api_url}}/api/login",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Login successful\",\n    \"access_token\": \"10|JfAO8MBPsrW9DsnsfzObryINhZLjhqptAXRYkGxSb68b9a31\",\n    \"user\": {\n        \"id\": 32,\n        \"name\": \"hasib\",\n        \"email\": \"hasib@gmail.com\",\n        \"address\": null,\n        \"phone\": \"0548752585\",\n        \"role_id\": 3,\n        \"role_name\": \"customer\"\n    },\n    \"token_type\": \"Bearer\",\n    \"expires_at\": \"2025-05-10 20:01:40\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Log Out",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "{{booking_api_url}}/api/logout",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": "{{booking_api_url}}/api/logout",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Logged out successfully\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints for user registration, authentication, and profile management."
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "Get Services Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/services",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{booking_api_url}}/api/services",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"current_page\": 1,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"quas repellat\",\n            \"price\": \"207.73\",\n            \"category_id\": 6,\n            \"discount_id\": 1,\n            \"description\": \"Suscipit sit ut harum inventore voluptas sit in exercitationem.\",\n            \"discounted_price\": \"151.64\",\n            \"category\": {\n                \"id\": 6,\n                \"name\": \"necessitatibus\"\n            },\n            \"discount\": {\n                \"id\": 1,\n                \"value\": \"27.00\",\n                \"type\": \"percentage\",\n                \"start_date\": \"2025-04-18\",\n                \"end_date\": \"2025-06-05\"\n            },\n            \"employees\": [\n                {\n                    \"id\": 8,\n                    \"name\": \"Alan Cummerata V\",\n                    \"description\": \"Occaecati dicta error autem quam eos.\",\n                    \"pivot\": {\n                        \"service_id\": 1,\n                        \"user_id\": 8\n                    }\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Mariano Reichel\",\n                    \"description\": \"Ut sunt id sapiente quasi.\",\n                    \"pivot\": {\n                        \"service_id\": 1,\n                        \"user_id\": 3\n                    }\n                },\n                {\n                    \"id\": 9,\n                    \"name\": \"Miss Asha Hyatt Sr.\",\n                    \"description\": \"Dolorem dolor doloremque temporibus sed praesentium excepturi.\",\n                    \"pivot\": {\n                        \"service_id\": 1,\n                        \"user_id\": 9\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 3,\n            \"name\": \"rem a\",\n            \"price\": \"483.94\",\n            \"category_id\": 8,\n            \"discount_id\": 1,\n            \"description\": \"Quo cupiditate quia quia dicta.\",\n            \"discounted_price\": \"353.28\",\n            \"category\": {\n                \"id\": 8,\n                \"name\": \"et\"\n            },\n            \"discount\": {\n                \"id\": 1,\n                \"value\": \"27.00\",\n                \"type\": \"percentage\",\n                \"start_date\": \"2025-04-18\",\n                \"end_date\": \"2025-06-05\"\n            },\n            \"employees\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Jaydon Okuneva\",\n                    \"description\": \"Quis tenetur libero maxime nisi magni fugiat.\",\n                    \"pivot\": {\n                        \"service_id\": 3,\n                        \"user_id\": 5\n                    }\n                },\n                {\n                    \"id\": 7,\n                    \"name\": \"Prof. Destiney Connelly\",\n                    \"description\": \"Ab dolorum et ut optio.\",\n                    \"pivot\": {\n                        \"service_id\": 3,\n                        \"user_id\": 7\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 6,\n            \"name\": \"nulla molestiae\",\n            \"price\": \"446.13\",\n            \"category_id\": 11,\n            \"discount_id\": 1,\n            \"description\": \"Tempore ipsa voluptas tempora quia.\",\n            \"discounted_price\": \"325.67\",\n            \"category\": {\n                \"id\": 11,\n                \"name\": \"praesentium\"\n            },\n            \"discount\": {\n                \"id\": 1,\n                \"value\": \"27.00\",\n                \"type\": \"percentage\",\n                \"start_date\": \"2025-04-18\",\n                \"end_date\": \"2025-06-05\"\n            },\n            \"employees\": [\n                {\n                    \"id\": 7,\n                    \"name\": \"Prof. Destiney Connelly\",\n                    \"description\": \"Ab dolorum et ut optio.\",\n                    \"pivot\": {\n                        \"service_id\": 6,\n                        \"user_id\": 7\n                    }\n                },\n                {\n                    \"id\": 9,\n                    \"name\": \"Miss Asha Hyatt Sr.\",\n                    \"description\": \"Dolorem dolor doloremque temporibus sed praesentium excepturi.\",\n                    \"pivot\": {\n                        \"service_id\": 6,\n                        \"user_id\": 9\n                    }\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Mariano Reichel\",\n                    \"description\": \"Ut sunt id sapiente quasi.\",\n                    \"pivot\": {\n                        \"service_id\": 6,\n                        \"user_id\": 3\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 10,\n            \"name\": \"quaerat voluptatem\",\n            \"price\": \"189.24\",\n            \"category_id\": 15,\n            \"discount_id\": 1,\n            \"description\": \"Tenetur earum repellendus nam soluta possimus.\",\n            \"discounted_price\": \"138.15\",\n            \"category\": {\n                \"id\": 15,\n                \"name\": \"a\"\n            },\n            \"discount\": {\n                \"id\": 1,\n                \"value\": \"27.00\",\n                \"type\": \"percentage\",\n                \"start_date\": \"2025-04-18\",\n                \"end_date\": \"2025-06-05\"\n            },\n            \"employees\": [\n                {\n                    \"id\": 8,\n                    \"name\": \"Alan Cummerata V\",\n                    \"description\": \"Occaecati dicta error autem quam eos.\",\n                    \"pivot\": {\n                        \"service_id\": 10,\n                        \"user_id\": 8\n                    }\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Mariano Reichel\",\n                    \"description\": \"Ut sunt id sapiente quasi.\",\n                    \"pivot\": {\n                        \"service_id\": 10,\n                        \"user_id\": 3\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 5,\n            \"name\": \"recusandae iste\",\n            \"price\": \"330.62\",\n            \"category_id\": 10,\n            \"discount_id\": 2,\n            \"description\": \"Nam error nobis temporibus nisi quia cum.\",\n            \"discounted_price\": \"310.62\",\n            \"category\": {\n                \"id\": 10,\n                \"name\": \"molestiae\"\n            },\n            \"discount\": {\n                \"id\": 2,\n                \"value\": \"20.00\",\n                \"type\": \"fixed\",\n                \"start_date\": \"2025-04-28\",\n                \"end_date\": \"2025-05-18\"\n            },\n            \"employees\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Jaydon Okuneva\",\n                    \"description\": \"Quis tenetur libero maxime nisi magni fugiat.\",\n                    \"pivot\": {\n                        \"service_id\": 5,\n                        \"user_id\": 5\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 7,\n            \"name\": \"sed magnam\",\n            \"price\": \"310.55\",\n            \"category_id\": 12,\n            \"discount_id\": 3,\n            \"description\": \"Facilis distinctio voluptate reiciendis rerum velit dolorem.\",\n            \"discounted_price\": \"254.65\",\n            \"category\": {\n                \"id\": 12,\n                \"name\": \"cupiditate\"\n            },\n            \"discount\": {\n                \"id\": 3,\n                \"value\": \"18.00\",\n                \"type\": \"percentage\",\n                \"start_date\": \"2025-04-11\",\n                \"end_date\": \"2025-05-28\"\n            },\n            \"employees\": [\n                {\n                    \"id\": 3,\n                    \"name\": \"Mariano Reichel\",\n                    \"description\": \"Ut sunt id sapiente quasi.\",\n                    \"pivot\": {\n                        \"service_id\": 7,\n                        \"user_id\": 3\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 2,\n            \"name\": \"sed occaecati\",\n            \"price\": \"426.12\",\n            \"category_id\": 7,\n            \"discount_id\": null,\n            \"description\": \"Adipisci illo possimus neque pariatur.\",\n            \"discounted_price\": \"0\",\n            \"category\": {\n                \"id\": 7,\n                \"name\": \"non\"\n            },\n            \"discount\": null,\n            \"employees\": [\n                {\n                    \"id\": 3,\n                    \"name\": \"Mariano Reichel\",\n                    \"description\": \"Ut sunt id sapiente quasi.\",\n                    \"pivot\": {\n                        \"service_id\": 2,\n                        \"user_id\": 3\n                    }\n                },\n                {\n                    \"id\": 7,\n                    \"name\": \"Prof. Destiney Connelly\",\n                    \"description\": \"Ab dolorum et ut optio.\",\n                    \"pivot\": {\n                        \"service_id\": 2,\n                        \"user_id\": 7\n                    }\n                },\n                {\n                    \"id\": 9,\n                    \"name\": \"Miss Asha Hyatt Sr.\",\n                    \"description\": \"Dolorem dolor doloremque temporibus sed praesentium excepturi.\",\n                    \"pivot\": {\n                        \"service_id\": 2,\n                        \"user_id\": 9\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 4,\n            \"name\": \"ipsam quasi\",\n            \"price\": \"358.01\",\n            \"category_id\": 9,\n            \"discount_id\": null,\n            \"description\": \"Magnam sed amet qui aut.\",\n            \"discounted_price\": \"0\",\n            \"category\": {\n                \"id\": 9,\n                \"name\": \"doloremque\"\n            },\n            \"discount\": null,\n            \"employees\": [\n                {\n                    \"id\": 3,\n                    \"name\": \"Mariano Reichel\",\n                    \"description\": \"Ut sunt id sapiente quasi.\",\n                    \"pivot\": {\n                        \"service_id\": 4,\n                        \"user_id\": 3\n                    }\n                },\n                {\n                    \"id\": 5,\n                    \"name\": \"Jaydon Okuneva\",\n                    \"description\": \"Quis tenetur libero maxime nisi magni fugiat.\",\n                    \"pivot\": {\n                        \"service_id\": 4,\n                        \"user_id\": 5\n                    }\n                },\n                {\n                    \"id\": 8,\n                    \"name\": \"Alan Cummerata V\",\n                    \"description\": \"Occaecati dicta error autem quam eos.\",\n                    \"pivot\": {\n                        \"service_id\": 4,\n                        \"user_id\": 8\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 8,\n            \"name\": \"provident sit\",\n            \"price\": \"272.50\",\n            \"category_id\": 13,\n            \"discount_id\": null,\n            \"description\": \"Commodi aut sunt ut in molestiae quo eaque.\",\n            \"discounted_price\": \"0\",\n            \"category\": {\n                \"id\": 13,\n                \"name\": \"aperiam\"\n            },\n            \"discount\": null,\n            \"employees\": [\n                {\n                    \"id\": 6,\n                    \"name\": \"Dr. Adolfo Ledner\",\n                    \"description\": \"Est rerum aliquid veritatis maiores explicabo.\",\n                    \"pivot\": {\n                        \"service_id\": 8,\n                        \"user_id\": 6\n                    }\n                },\n                {\n                    \"id\": 3,\n                    \"name\": \"Mariano Reichel\",\n                    \"description\": \"Ut sunt id sapiente quasi.\",\n                    \"pivot\": {\n                        \"service_id\": 8,\n                        \"user_id\": 3\n                    }\n                },\n                {\n                    \"id\": 4,\n                    \"name\": \"Magdalena Stiedemann\",\n                    \"description\": \"Quia consequatur quas facere saepe qui tenetur.\",\n                    \"pivot\": {\n                        \"service_id\": 8,\n                        \"user_id\": 4\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 9,\n            \"name\": \"nesciunt ullam\",\n            \"price\": \"448.04\",\n            \"category_id\": 14,\n            \"discount_id\": null,\n            \"description\": \"Voluptatem dolore dignissimos qui quaerat adipisci et nihil.\",\n            \"discounted_price\": \"0\",\n            \"category\": {\n                \"id\": 14,\n                \"name\": \"explicabo\"\n            },\n            \"discount\": null,\n            \"employees\": [\n                {\n                    \"id\": 5,\n                    \"name\": \"Jaydon Okuneva\",\n                    \"description\": \"Quis tenetur libero maxime nisi magni fugiat.\",\n                    \"pivot\": {\n                        \"service_id\": 9,\n                        \"user_id\": 5\n                    }\n                },\n                {\n                    \"id\": 9,\n                    \"name\": \"Miss Asha Hyatt Sr.\",\n                    \"description\": \"Dolorem dolor doloremque temporibus sed praesentium excepturi.\",\n                    \"pivot\": {\n                        \"service_id\": 9,\n                        \"user_id\": 9\n                    }\n                }\n            ]\n        }\n    ],\n    \"first_page_url\": \"http://127.0.0.1:8008/api/services?page=1\",\n    \"from\": 1,\n    \"last_page\": 1,\n    \"last_page_url\": \"http://127.0.0.1:8008/api/services?page=1\",\n    \"links\": [\n        {\n            \"url\": null,\n            \"label\": \"&laquo; Previous\",\n            \"active\": false\n        },\n        {\n            \"url\": \"http://127.0.0.1:8008/api/services?page=1\",\n            \"label\": \"1\",\n            \"active\": true\n        },\n        {\n            \"url\": null,\n            \"label\": \"Next &raquo;\",\n            \"active\": false\n        }\n    ],\n    \"next_page_url\": null,\n    \"path\": \"http://127.0.0.1:8008/api/services\",\n    \"per_page\": 15,\n    \"prev_page_url\": null,\n    \"to\": 10,\n    \"total\": 10\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a Service Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/services/13",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{booking_api_url}}/api/services/13",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"quas repellat\",\n    \"price\": \"207.73\",\n    \"category_id\": 6,\n    \"discount_id\": 1,\n    \"description\": \"Suscipit sit ut harum inventore voluptas sit in exercitationem.\",\n    \"discounted_price\": \"151.64\",\n    \"category\": {\n        \"id\": 6,\n        \"name\": \"necessitatibus\"\n    },\n    \"discount\": {\n        \"id\": 1,\n        \"value\": \"27.00\",\n        \"type\": \"percentage\",\n        \"start_date\": \"2025-04-18\",\n        \"end_date\": \"2025-06-05\"\n    },\n    \"employees\": [\n        {\n            \"id\": 8,\n            \"name\": \"Alan Cummerata V\",\n            \"description\": \"Occaecati dicta error autem quam eos.\",\n            \"pivot\": {\n                \"service_id\": 1,\n                \"user_id\": 8\n            }\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Mariano Reichel\",\n            \"description\": \"Ut sunt id sapiente quasi.\",\n            \"pivot\": {\n                \"service_id\": 1,\n                \"user_id\": 3\n            }\n        },\n        {\n            \"id\": 9,\n            \"name\": \"Miss Asha Hyatt Sr.\",\n            \"description\": \"Dolorem dolor doloremque temporibus sed praesentium excepturi.\",\n            \"pivot\": {\n                \"service_id\": 1,\n                \"user_id\": 9\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a Service Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category_id\": 1,\r\n  \"name\": \"kleaning Service\",\r\n  \"price\": 150.75,\r\n  \"description\": \"Comprehensive cleaning package including windows, carpets, and upholstery.\",\r\n  \"discount_id\": 2,\r\n  \"employee_ids\": [3, 4, 5]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/services",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 201",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"category_id\": 1,\r\n  \"name\": \"kleaning Service\",\r\n  \"price\": 150.75,\r\n  \"description\": \"Comprehensive cleaning package including windows, carpets, and upholstery.\",\r\n  \"discount_id\": 2,\r\n  \"employee_ids\": [3, 4, 5]\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{booking_api_url}}/api/services",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Service created successfully.\",\n    \"service\": {\n        \"category_id\": 1,\n        \"name\": \"kleaning Service\",\n        \"price\": 150.75,\n        \"description\": \"Comprehensive cleaning package including windows, carpets, and upholstery.\",\n        \"discount_id\": 2,\n        \"updated_at\": \"2025-05-10T17:09:06.000000Z\",\n        \"created_at\": \"2025-05-10T17:09:06.000000Z\",\n        \"id\": 11,\n        \"category\": {\n            \"id\": 1,\n            \"name\": \"magnam\",\n            \"description\": \"Minus ea repellendus quia non fuga non enim.\",\n            \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n            \"updated_at\": \"2025-05-10T02:31:16.000000Z\"\n        },\n        \"discount\": {\n            \"id\": 2,\n            \"code\": \"BB40\",\n            \"type\": \"fixed\",\n            \"value\": \"20.00\",\n            \"start_date\": \"2025-04-28\",\n            \"end_date\": \"2025-05-18\",\n            \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n            \"updated_at\": \"2025-05-10T02:31:16.000000Z\"\n        },\n        \"employees\": [\n            {\n                \"id\": 3,\n                \"name\": \"Mariano Reichel\",\n                \"email\": \"eoconnell@example.net\",\n                \"email_verified_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"address\": \"145 Ryan Shoal Apt. 261\\nDrewstad, PA 44231\",\n                \"phone\": \"463.232.1389\",\n                \"description\": \"Ut sunt id sapiente quasi.\",\n                \"role_id\": 2,\n                \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"updated_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"pivot\": {\n                    \"service_id\": 11,\n                    \"user_id\": 3\n                }\n            },\n            {\n                \"id\": 4,\n                \"name\": \"Magdalena Stiedemann\",\n                \"email\": \"lang.hector@example.net\",\n                \"email_verified_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"address\": \"53306 Armani Squares Apt. 208\\nWuckertton, AR 85980\",\n                \"phone\": \"+1.323.767.1020\",\n                \"description\": \"Quia consequatur quas facere saepe qui tenetur.\",\n                \"role_id\": 2,\n                \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"updated_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"pivot\": {\n                    \"service_id\": 11,\n                    \"user_id\": 4\n                }\n            },\n            {\n                \"id\": 5,\n                \"name\": \"Jaydon Okuneva\",\n                \"email\": \"meta.kovacek@example.org\",\n                \"email_verified_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"address\": \"67974 D'Amore Lodge Apt. 083\\nNoemyland, OR 75838-0107\",\n                \"phone\": \"574.938.9050\",\n                \"description\": \"Quis tenetur libero maxime nisi magni fugiat.\",\n                \"role_id\": 2,\n                \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"updated_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"pivot\": {\n                    \"service_id\": 11,\n                    \"user_id\": 5\n                }\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update a Service Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category_id\": 1,\r\n  \"name\": \"Test Service\",\r\n  \"price\": 150.75,\r\n  \"description\": \"Comprehensive cleaning package including windows, carpets.\",\r\n  \"discount_id\": 2,\r\n  \"employee_ids\": [3, 5]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/services/5",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"category_id\": 1,\r\n  \"name\": \"Test Service\",\r\n  \"price\": 150.75,\r\n  \"description\": \"Comprehensive cleaning package including windows, carpets.\",\r\n  \"discount_id\": 2,\r\n  \"employee_ids\": [3, 5]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{booking_api_url}}/api/services/5",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Service updated successfully.\",\n    \"service\": {\n        \"id\": 5,\n        \"category_id\": 1,\n        \"discount_id\": 2,\n        \"name\": \"Test Service\",\n        \"price\": 150.75,\n        \"description\": \"Comprehensive cleaning package including windows, carpets.\",\n        \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n        \"updated_at\": \"2025-05-10T17:10:03.000000Z\",\n        \"category\": {\n            \"id\": 1,\n            \"name\": \"magnam\",\n            \"description\": \"Minus ea repellendus quia non fuga non enim.\",\n            \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n            \"updated_at\": \"2025-05-10T02:31:16.000000Z\"\n        },\n        \"discount\": {\n            \"id\": 2,\n            \"code\": \"BB40\",\n            \"type\": \"fixed\",\n            \"value\": \"20.00\",\n            \"start_date\": \"2025-04-28\",\n            \"end_date\": \"2025-05-18\",\n            \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n            \"updated_at\": \"2025-05-10T02:31:16.000000Z\"\n        },\n        \"employees\": [\n            {\n                \"id\": 5,\n                \"name\": \"Jaydon Okuneva\",\n                \"email\": \"meta.kovacek@example.org\",\n                \"email_verified_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"address\": \"67974 D'Amore Lodge Apt. 083\\nNoemyland, OR 75838-0107\",\n                \"phone\": \"574.938.9050\",\n                \"description\": \"Quis tenetur libero maxime nisi magni fugiat.\",\n                \"role_id\": 2,\n                \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"updated_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"pivot\": {\n                    \"service_id\": 5,\n                    \"user_id\": 5\n                }\n            },\n            {\n                \"id\": 3,\n                \"name\": \"Mariano Reichel\",\n                \"email\": \"eoconnell@example.net\",\n                \"email_verified_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"address\": \"145 Ryan Shoal Apt. 261\\nDrewstad, PA 44231\",\n                \"phone\": \"463.232.1389\",\n                \"description\": \"Ut sunt id sapiente quasi.\",\n                \"role_id\": 2,\n                \"created_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"updated_at\": \"2025-05-10T02:31:16.000000Z\",\n                \"pivot\": {\n                    \"service_id\": 5,\n                    \"user_id\": 3\n                }\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a Service Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{booking_api_url}}/api/services/5",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": "{{booking_api_url}}/api/services/5",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": " 204 No Content",
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "Endpoints to create, retrieve, update, and delete service offerings."
+		},
+		{
+			"name": "User Roles",
+			"item": [
+				{
+					"name": "Get Roles Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/roles",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{booking_api_url}}/api/roles",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"name\": \"customer\",\n      \"description\": \"Customer role\"\n    }\n  ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a Role Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/roles/4",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "{{booking_api_url}}/api/roles/4",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"data\": {\n    \"id\": \"{{id}}\",\n    \"name\": \"customer\",\n    \"description\": \"Customer role\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a Role Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"test\",\r\n  \"description\": \"Comprehensive upholstery.\"\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/roles",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 201",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"test\",\r\n  \"description\": \"Comprehensive upholstery.\"\r\n\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{booking_api_url}}/api/roles",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 201,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": 2,\n    \"name\": \"{{name}}\",\n    \"description\": \"{{description}}\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update a Role Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"test update\",\r\n  \"description\": \"Comprehensive upholstery.\"\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/roles/4",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"test update\",\r\n  \"description\": \"Comprehensive upholstery.\"\r\n\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{booking_api_url}}/api/roles/4",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"{{id}}\",\n    \"name\": \"{{name}}\",\n    \"description\": \"{{description}}\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a Role Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{booking_api_url}}/api/roles/4",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": "{{booking_api_url}}/api/roles/4",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Role deleted\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints to manage user roles and permissions."
+		},
+		{
+			"name": "Service Category",
+			"item": [
+				{
+					"name": "Get Categories Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/categories",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a Category Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/categories/13",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a Category Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"kleaning Service\",\r\n  \"description\": \"Comprehensive cleaning package including windows, carpets, and upholstery.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/categories",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update a Service Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"test  Service\",\r\n  \"description\": \"Comprehensive cleaning package including windows, carpets, and upholstery.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/categories/16",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"test  Service\",\r\n  \"description\": \"Comprehensive cleaning package including windows, carpets, and upholstery.\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{booking_api_url}}/api/categories/16",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"data\": {\n    \"id\": \"{{id}}\",\n    \"name\": \"{{name}}\",\n    \"description\": \"{{description}}\",\n    \"price\": \"{{price}}\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a Service Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{booking_api_url}}/api/categories/16",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Example Success 200",
+							"originalRequest": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": "{{booking_api_url}}/api/categories/16",
+								"description": "Gets information about the authenticated user."
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"success\": true,\n  \"message\": \"Service deleted\"\n}"
+						}
+					]
+				}
+			],
+			"description": "The `/me` endpoints let you manage information about the authenticated user."
+		},
+		{
+			"name": "Services Booking",
+			"item": [
+				{
+					"name": "Get Bookings Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/bookings",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"current_page\": 1,\n    \"data\": [\n        {\n            \"id\": 9,\n            \"contact_name\": \"Juliet Mosciski\",\n            \"service_id\": 8,\n            \"user_id\": 7,\n            \"contact_phone\": \"(445) 284-2117\",\n            \"service_location\": \"87195 Pearl Motorway Apt. 444\\nLiafurt, MA 88397-3353\",\n            \"status\": \"cancelled\",\n            \"scheduled_at\": \"2025-05-24 00:39:12\",\n            \"service\": {\n                \"id\": 8,\n                \"name\": \"provident sit\"\n            },\n            \"user\": {\n                \"id\": 7,\n                \"name\": \"Prof. Destiney Connelly\"\n            }\n        },\n        {\n            \"id\": 11,\n            \"contact_name\": \"Willa Harber\",\n            \"service_id\": 3,\n            \"user_id\": 6,\n            \"contact_phone\": \"+1 (760) 303-6612\",\n            \"service_location\": \"83890 Keely Mountains\\nMarvinmouth, NY 63796\",\n            \"status\": \"pending\",\n            \"scheduled_at\": \"2025-05-23 09:19:40\",\n            \"service\": {\n                \"id\": 3,\n                \"name\": \"rem a\"\n            },\n            \"user\": {\n                \"id\": 6,\n                \"name\": \"Dr. Adolfo Ledner\"\n            }\n        },\n        {\n            \"id\": 10,\n            \"contact_name\": \"Ronny Friesen\",\n            \"service_id\": 9,\n            \"user_id\": 24,\n            \"contact_phone\": \"707-727-3508\",\n            \"service_location\": \"23556 Orpha Valleys\\nWestmouth, SC 64045-1175\",\n            \"status\": \"cancelled\",\n            \"scheduled_at\": \"2025-05-23 04:20:04\",\n            \"service\": {\n                \"id\": 9,\n                \"name\": \"nesciunt ullam\"\n            },\n            \"user\": {\n                \"id\": 24,\n                \"name\": \"Prof. Bonita Cronin\"\n            }\n        },\n        {\n            \"id\": 21,\n            \"contact_name\": \"Prof. Orlando Hessel Sr.\",\n            \"service_id\": 3,\n            \"user_id\": 30,\n            \"contact_phone\": \"(864) 276-2562\",\n            \"service_location\": \"61769 Alisa Fields Suite 045\\nWest Fidel, NV 84863\",\n            \"status\": \"cancelled\",\n            \"scheduled_at\": \"2025-05-22 22:05:22\",\n            \"service\": {\n                \"id\": 3,\n                \"name\": \"rem a\"\n            },\n            \"user\": {\n                \"id\": 30,\n                \"name\": \"Jennyfer Simonis\"\n            }\n        },\n        {\n            \"id\": 14,\n            \"contact_name\": \"Enos Hartmann\",\n            \"service_id\": 4,\n            \"user_id\": 24,\n            \"contact_phone\": \"(352) 475-6808\",\n            \"service_location\": \"3552 Monahan Greens Apt. 084\\nPort Candidoport, NE 35579-8933\",\n            \"status\": \"pending\",\n            \"scheduled_at\": \"2025-05-22 14:37:27\",\n            \"service\": {\n                \"id\": 4,\n                \"name\": \"ipsam quasi\"\n            },\n            \"user\": {\n                \"id\": 24,\n                \"name\": \"Prof. Bonita Cronin\"\n            }\n        },\n        {\n            \"id\": 13,\n            \"contact_name\": \"Ms. Claire Dibbert PhD\",\n            \"service_id\": 4,\n            \"user_id\": 23,\n            \"contact_phone\": \"+17542816571\",\n            \"service_location\": \"52606 Rick Oval Apt. 073\\nBetsyton, MT 46824-6112\",\n            \"status\": \"completed\",\n            \"scheduled_at\": \"2025-05-22 14:24:11\",\n            \"service\": {\n                \"id\": 4,\n                \"name\": \"ipsam quasi\"\n            },\n            \"user\": {\n                \"id\": 23,\n                \"name\": \"Ethel Mayert\"\n            }\n        },\n        {\n            \"id\": 27,\n            \"contact_name\": \"Shane Ernser\",\n            \"service_id\": 2,\n            \"user_id\": 16,\n            \"contact_phone\": \"+1.970.670.0719\",\n            \"service_location\": \"5771 Pedro Orchard\\nBrakuschester, WY 89825\",\n            \"status\": \"confirmed\",\n            \"scheduled_at\": \"2025-05-22 09:57:16\",\n            \"service\": {\n                \"id\": 2,\n                \"name\": \"sed occaecati\"\n            },\n            \"user\": {\n                \"id\": 16,\n                \"name\": \"Robbie Doyle\"\n            }\n        },\n        {\n            \"id\": 17,\n            \"contact_name\": \"Dr. Danielle Friesen\",\n            \"service_id\": 3,\n            \"user_id\": 5,\n            \"contact_phone\": \"(520) 381-1826\",\n            \"service_location\": \"35784 Hermann Square\\nLake Jessborough, OH 14263\",\n            \"status\": \"completed\",\n            \"scheduled_at\": \"2025-05-22 06:05:41\",\n            \"service\": {\n                \"id\": 3,\n                \"name\": \"rem a\"\n            },\n            \"user\": {\n                \"id\": 5,\n                \"name\": \"Jaydon Okuneva\"\n            }\n        },\n        {\n            \"id\": 28,\n            \"contact_name\": \"Grace Hamill\",\n            \"service_id\": 6,\n            \"user_id\": 17,\n            \"contact_phone\": \"630-367-6021\",\n            \"service_location\": \"1431 Gretchen Stravenue Apt. 541\\nWest Frankie, MD 19890\",\n            \"status\": \"confirmed\",\n            \"scheduled_at\": \"2025-05-22 04:51:06\",\n            \"service\": {\n                \"id\": 6,\n                \"name\": \"nulla molestiae\"\n            },\n            \"user\": {\n                \"id\": 17,\n                \"name\": \"Mr. Jamil Daniel Jr.\"\n            }\n        },\n        {\n            \"id\": 8,\n            \"contact_name\": \"Mr. Karson Wisozk\",\n            \"service_id\": 4,\n            \"user_id\": 28,\n            \"contact_phone\": \"(906) 854-8065\",\n            \"service_location\": \"82278 Buckridge Squares Suite 672\\nDoylefurt, MT 45817-0682\",\n            \"status\": \"cancelled\",\n            \"scheduled_at\": \"2025-05-22 00:23:57\",\n            \"service\": {\n                \"id\": 4,\n                \"name\": \"ipsam quasi\"\n            },\n            \"user\": {\n                \"id\": 28,\n                \"name\": \"Dr. Rico Heaney\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"contact_name\": \"Charlotte Altenwerth\",\n            \"service_id\": 1,\n            \"user_id\": 18,\n            \"contact_phone\": \"1-574-925-2982\",\n            \"service_location\": \"2404 Pollich Ranch Apt. 274\\nLake Missourifort, NY 50650-3350\",\n            \"status\": \"completed\",\n            \"scheduled_at\": \"2025-05-21 10:58:50\",\n            \"service\": {\n                \"id\": 1,\n                \"name\": \"quas repellat\"\n            },\n            \"user\": {\n                \"id\": 18,\n                \"name\": \"Eda Graham\"\n            }\n        },\n        {\n            \"id\": 18,\n            \"contact_name\": \"Jeremie Mills\",\n            \"service_id\": 2,\n            \"user_id\": 13,\n            \"contact_phone\": \"1-517-760-3172\",\n            \"service_location\": \"6135 King Land\\nRoelmouth, ME 50270\",\n            \"status\": \"completed\",\n            \"scheduled_at\": \"2025-05-21 01:59:21\",\n            \"service\": {\n                \"id\": 2,\n                \"name\": \"sed occaecati\"\n            },\n            \"user\": {\n                \"id\": 13,\n                \"name\": \"Aileen Weimann\"\n            }\n        },\n        {\n            \"id\": 25,\n            \"contact_name\": \"Athena Thompson\",\n            \"service_id\": 8,\n            \"user_id\": 17,\n            \"contact_phone\": \"234.988.3599\",\n            \"service_location\": \"777 Albin Vista Apt. 024\\nMacymouth, WY 48789-2593\",\n            \"status\": \"confirmed\",\n            \"scheduled_at\": \"2025-05-20 02:35:36\",\n            \"service\": {\n                \"id\": 8,\n                \"name\": \"provident sit\"\n            },\n            \"user\": {\n                \"id\": 17,\n                \"name\": \"Mr. Jamil Daniel Jr.\"\n            }\n        },\n        {\n            \"id\": 15,\n            \"contact_name\": \"Braxton Bosco\",\n            \"service_id\": 4,\n            \"user_id\": 6,\n            \"contact_phone\": \"+1-406-398-7210\",\n            \"service_location\": \"7817 Botsford Extensions\\nLake Martymouth, MO 60901-0371\",\n            \"status\": \"pending\",\n            \"scheduled_at\": \"2025-05-17 03:14:23\",\n            \"service\": {\n                \"id\": 4,\n                \"name\": \"ipsam quasi\"\n            },\n            \"user\": {\n                \"id\": 6,\n                \"name\": \"Dr. Adolfo Ledner\"\n            }\n        },\n        {\n            \"id\": 1,\n            \"contact_name\": \"Susanna Gleichner\",\n            \"service_id\": 8,\n            \"user_id\": 7,\n            \"contact_phone\": \"1-283-918-3296\",\n            \"service_location\": \"2018 Gayle Shores Apt. 226\\nNorth Karlieborough, MA 80665-5710\",\n            \"status\": \"completed\",\n            \"scheduled_at\": \"2025-05-17 01:39:52\",\n            \"service\": {\n                \"id\": 8,\n                \"name\": \"provident sit\"\n            },\n            \"user\": {\n                \"id\": 7,\n                \"name\": \"Prof. Destiney Connelly\"\n            }\n        }\n    ],\n    \"first_page_url\": \"http://127.0.0.1:8008/api/bookings?page=1\",\n    \"from\": 1,\n    \"last_page\": 2,\n    \"last_page_url\": \"http://127.0.0.1:8008/api/bookings?page=2\",\n    \"links\": [\n        {\n            \"url\": null,\n            \"label\": \"&laquo; Previous\",\n            \"active\": false\n        },\n        {\n            \"url\": \"http://127.0.0.1:8008/api/bookings?page=1\",\n            \"label\": \"1\",\n            \"active\": true\n        },\n        {\n            \"url\": \"http://127.0.0.1:8008/api/bookings?page=2\",\n            \"label\": \"2\",\n            \"active\": false\n        },\n        {\n            \"url\": \"http://127.0.0.1:8008/api/bookings?page=2\",\n            \"label\": \"Next &raquo;\",\n            \"active\": false\n        }\n    ],\n    \"next_page_url\": \"http://127.0.0.1:8008/api/bookings?page=2\",\n    \"path\": \"http://127.0.0.1:8008/api/bookings\",\n    \"per_page\": 15,\n    \"prev_page_url\": null,\n    \"to\": 15,\n    \"total\": 26\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a Booking Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/bookings/13",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get a Booking Status Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{booking_api_url}}/api/bookings/status/df8222b5-297c-3662-aadc-6532ae01680e",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a Booking Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookings\": [\r\n    { \"service_id\": 1, \"scheduled_at\": \"2025-05-09 15:10:00\" }\r\n    // { \"service_id\": 2, \"scheduled_at\": \"2025-06-10 14:00:00\" }\r\n  ],\r\n  \"user_id\": 6,\r\n  \"contact_name\": \"John Doe\",\r\n  \"contact_phone\": \"+1-555-123-4567\",\r\n  \"service_location\": \"123 Main St, Springfield\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/bookings",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update a Booking Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"contact_name\": \"test Smith\",\r\n  \"contact_phone\": \"+1-555-987-6543\",\r\n  \"service_location\": \"456 Elm St, Metropolis\",\r\n  \"scheduled_at\": \"2025-05-10 14:00:00\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/bookings/1",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update a Booking Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": \"cancelled\",\r\n  \"booking_id\": 30\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{booking_api_url}}/api/bookings/status/update",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a Booking Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{booking_api_url}}/api/bookings/1",
+						"description": "Gets information about the authenticated user."
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 12345678,\n        \"username\": \"taylor-lee\",\n        \"email\": \"taylor.lee@example.com\",\n        \"fullName\": \"Taylor Lee\",\n        \"avatar\": \"https://example.com/user/r5u9qpvmujfjf6lbqmga.jpg\",\n        \"isPublic\": true\n    },\n    \"operations\": [\n        {\n            \"name\": \"mock_usage\",\n            \"limit\": 1000000,\n            \"usage\": 110276,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"monitor_request_runs\",\n            \"limit\": 10000000,\n            \"usage\": 1141750,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"api_usage\",\n            \"limit\": 1000000,\n            \"usage\": 16240,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"custom_domains\",\n            \"limit\": 25,\n            \"usage\": 25,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"serverless_requests\",\n            \"limit\": 10000,\n            \"usage\": 0,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"integrations\",\n            \"limit\": 5000,\n            \"usage\": 1018,\n            \"overage\": 0\n        },\n        {\n            \"name\": \"cloud_agent_requests\",\n            \"limit\": 1000000,\n            \"usage\": 1615,\n            \"overage\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "Rate Limit Exceeded",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "https://api.getpostman.com/me"
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"rateLimited\",\n    \"message\": \"Rate limit exceeded. Please retry after 1669048687\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Bookings Collection",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"let json = pm.response.json();\r",
+									"// adjust the path if needed:\r",
+									"let token = json.access_token || json.data?.access_token;\r",
+									"\r",
+									"if (token) {\r",
+									"  // store it as an environment (or collection) variable\r",
+									"  pm.environment.set(\"token\", token);\r",
+									"} else {\r",
+									"  console.warn(\"⚠️ token not found in response\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "https://api.getpostman.com/me"
+					},
+					"response": []
+				}
+			],
+			"description": "The `/me` endpoints let you manage information about the authenticated user."
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{token}}"
+		}
+	},
+	"variable": [
+		{
+			"key": "booking_api_url",
+			"value": "http://127.0.0.1:8008"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

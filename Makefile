@@ -6,7 +6,7 @@ NGINX        ?= nginx          # docker-compose service name
 COMPOSE       = docker compose       # alias (v2 syntax)
 PHP          ?= php                  # inside-container PHP alias
 
-# Default target: full setup (build → up → install → env → migrate)
+# Default target: full setup (env → build → up → install → migrate)
 .PHONY: setup
 setup: env build up install migrate
 
