@@ -126,12 +126,14 @@ steps:
 
 Download and import these files into Postman:
 
-- **Postman Collection**  
-  [Download Collection](./Sheba.XYZ%20Booking%20API%20Collections_mdhasib522@gmail.com.postman_collection.json)
-
-- **Environment (Env Test)**  
-  [Download Env Test](./booking_api_env.postman_environment_mdhasib522@gmail.com.json)
-
+<p>
+  <a href="./Sheba.XYZ Booking API Collections_mdhasib522@gmail.com.postman_collection.json" download>
+    📥 Download Collection JSON
+  </a><br>
+  <a href="./booking_api_env.postman_environment_mdhasib522@gmail.com.json" download>
+    📥 Download Env Test JSON
+  </a>
+</p>
 
 
 ## ERD
