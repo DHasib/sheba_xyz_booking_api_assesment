@@ -1,6 +1,3 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
-
 # Sheba XYZ Booking API - Local Development Guide
 
 A simple Laravel-based RESTful API for managing bookings in the Sheba XYZ system.
@@ -28,7 +25,8 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 - [Setup & Run Instructions](#setup--run-instructions)  
 - [API Documentation](#api-documentation)  
   - [Authentication](#authentication)  
-  - [Bookings](#bookings)  
+  - [Bookings](#bookings)
+  - [Project Entity Relationship Diagram (ERD)](#erd)  
 - [Running Tests](#running-tests)  
 
 
@@ -107,6 +105,11 @@ steps:
 ```
 
 ---
+
+## Api-Documentation
+
+## ERD
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 
 
