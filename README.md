@@ -26,7 +26,7 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 - [API Documentation](#api-documentation)
   - [Admin Credential](#admin-credential)  
   - [Authorization Script](#authentication)  
-  - [Postman Api Collections ](#bookings)
+  - [Postman Api Collections](#postman-api-collections)
   - [Project Entity Relationship Diagram (ERD)](#erd)  
 - [Running Tests](#running-tests)  
 
@@ -122,13 +122,27 @@ steps:
 **Not Done Yet to list out Api Documentation But functionally Done Everything**
 
 
-## Bookings
+## Postman Api Collections
 
 Download and import these files into Postman:
 
 - [📥 Download Postman Api Collection JSON](https://github.com/DHasib/sheba_xyz_booking_api_assesment/releases/download/postman_api_collections_and_env_v0.0.1/booking_api_env.postman_environment_mdhasib522@gmail.com.json)
 - [📥 Download Postman Env JSON](https://github.com/DHasib/sheba_xyz_booking_api_assesment/releases/download/postman_api_collections_and_env_v0.0.1/Sheba.XYZ.Booking.API.Collections_mdhasib522@gmail.com.postman_collection.json)
 
+---
+
+## Instructions
+
+1. In Postman click **Import → File**, and select:
+   - `Sheba.XYZ Booking API Collections_mdhasib522@gmail.com.postman_collection.json`  
+   - `booking_api_env.postman_environment_mdhasib522@gmail.com.json`
+2. In the top-right of Postman, choose the **booking_api_env** environment.
+3. Set:
+   - `booking_api_url` → your API’s base URL (e.g. `http://localhost:8000`)
+   - `token` → your JWT/Bearer token  
+4. Run the requests under **Sheba.XYZ Booking API**.
+
+---
 
 
 ## ERD
