@@ -1,17 +1,21 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 
-# Sheba XYZ Booking API
+# Sheba XYZ Booking API - Local Development Guide
 
 A simple Laravel-based RESTful API for managing bookings in the Sheba XYZ system.
 
-1. # Booking API – Local Development Guide
+ 
 
-This project ships with a **Makefile** that hides almost every Docker / Laravel command you normally have to remember. After cloning, you can be up and running with **one line**.
+This project ships with a **Makefile** that hides almost every Docker / Laravel command you normally have to remember. After cloning, you can be up and running with **one line** to setup everything will be done by automation.
+
+
 
 ---
 
-\## Prerequisites
+
+
+## Prerequisites
 
 | Tool                  | Version (‑‑minimum)                                                         | Notes                                                                                            |
 | --------------------- | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -20,6 +24,10 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 | **GNU Make**          | 4.x                                                                         | Comes pre‑installed on macOS & most Linux distros. Windows: install via WSL or make for Windows. |
 
 > **No local PHP, Composer, MySQL, or Node required** – everything runs inside the `booking_api` container.
+
+
+
+
 
 
 ## Table of Contents
