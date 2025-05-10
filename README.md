@@ -117,6 +117,16 @@ steps:
 'password' = P@ssword
 ```
 
+## Authentication
+
+**Not Done Yet to list out Api Documentation But functionally Done Everything**
+
+
+## Bookings
+
+**Not Done Yet to list out Api Documentation But functionally Done Everything**
+
+
 ## ERD
 <p align="center">
   <img
