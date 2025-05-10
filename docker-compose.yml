@@ -36,7 +36,7 @@ services:
             - ./docker-compose/mysql/my.cnf:/etc/mysql/my.cnf
             - ./docker-compose/mysql/init:/docker-entrypoint-initdb.d
         healthcheck:
-            test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1', '-u', 'root', '-proot']
+            test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1', '-u', 'root', '-p${DB_PASSWORD}']
             interval: 5s
             timeout: 5s
             retries: 10
