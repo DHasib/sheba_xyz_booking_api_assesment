@@ -113,7 +113,6 @@ steps:
 **It will Create Automatically When You Run Make Setup Command**
 
 ```bash
-'name' = admin
 'email' = admin@example.com
 'password' = P@ssword
 ```
