@@ -110,6 +110,7 @@ steps:
 
 ## Admin-Credential
 
+**It will Create Automatically When You Run Make Setup Command**
 
 ```bash
 'name' = admin
