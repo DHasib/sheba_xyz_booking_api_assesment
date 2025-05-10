@@ -50,10 +50,10 @@ make setup
 
 Behind the scenes this will:
 
-1. `docker compose build booking_api` – build the PHP/Laravel image
-2. `docker compose up -d booking_api` – start the app & its dependencies
-3. `composer install` – inside the container
-4. Copy `.env.dev → .env` if no `.env` exists
+1.  Copy `.env.dev → .env` if no `.env` exists
+2. `docker compose build booking_api & ngnix` – build the PHP/Laravel image
+3. `docker compose up -d booking_api & ngnix` – start the app & its dependencies
+4. `composer install` – inside the container
 5. `php artisan migrate:fresh --seed` – wipe & seed the database
 
 When the command finishes, the API is available at **[http://localhost:8008](http://localhost:8008)** (or the port you mapped in `docker‑compose.yml`).
