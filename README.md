@@ -23,7 +23,8 @@ This project ships with a **Makefile** that hides almost every Docker / Laravel 
 ## Table of Contents
 
 - [Setup & Run Instructions](#setup--run-instructions)  
-- [API Documentation](#api-documentation)  
+- [API Documentation](#api-documentation)
+  - [Admin Credential](#admin-credential)  
   - [Authentication](#authentication)  
   - [Bookings](#bookings)
   - [Project Entity Relationship Diagram (ERD)](#erd)  
@@ -104,9 +105,17 @@ steps:
   - run: make test
 ```
 
----
 
 ## Api-Documentation
+
+## Admin-Credential
+
+
+```bash
+'name' = admin
+'email' = admin@example.com
+'password' = P@ssword
+```
 
 ## ERD
 <p align="center">
