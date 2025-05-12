@@ -47,6 +47,12 @@ cd sheba_xyz_booking_api_assesment
 make setup
 ```
 
+**2.1 . Option 2 (If You Have any problem to install throught make setup Used this script)**
+
+```bash
+npm run setup
+```
+
 Behind the scenes this will:
 
 1.  Copy `.env.dev → .env` if no `.env` exists
@@ -61,15 +67,15 @@ When the command finishes, the API is available at **[http://localhost:8008](htt
 
 **3 · Daily workflow cheatsheet**
 
-| Task                                    | Command                 |
-| --------------------------------------- | ----------------------- |
-| Rebuild images after Dockerfile changes | `make build`            |
-| Start/stop containers                   | `make up` / `make stop` |
-| Drop DB & reseed                        | `make migrate`          |
-| Run PHPUnit test suite                  | `make test`             |
-| Clear Laravel caches                    | `make clear`            |
-| Tail the Laravel log                    | `make log`              |
-| Tear everything down                    | `make down`             |
+| Task                                    | MAKE Command            | NPM Script Command          |  
+| --------------------------------------- | ----------------------- |                             |
+| Rebuild images after Dockerfile changes | `make build`            |  `npm run build`            |
+| Start/stop containers                   | `make up` / `make stop` |  `npm run up /npm run stop` |
+| Drop DB & reseed                        | `make migrate`          |  `npm run install`          |
+| Run PHPUnit test suite                  | `make test`             |  `npm run migrate`          |
+| Clear Laravel caches                    | `make clear`            |  `npm run test`             |
+| Tail the Laravel log                    | `make log`              |  `npm run clear`            |
+| Tear everything down                    | `make down`             |  `npm run log`              |
 
 > You can override the container name on the fly:<br>`SERVICE=my_alt_service make migrate`
 

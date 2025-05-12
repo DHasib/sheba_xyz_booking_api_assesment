@@ -3,7 +3,18 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "setup": "npm run env && npm run docker-build && npm run up && npm run install && npm run migrate",
+        "docker-build": "docker compose build booking_api nginx",
+        "up":    "docker compose up -d booking_api nginx",
+        "stop":  "docker compose stop booking_api nginx",
+        "down":  "docker compose down",
+        "install": "docker compose exec booking_api composer install --no-interaction --prefer-dist --optimize-autoloader",
+        "env": "sh -c \"[ -f .env ] || cp .env.dev .env\"",
+        "migrate": "docker compose exec booking_api php artisan migrate:fresh --seed --force",
+        "test": "docker compose exec booking_api php artisan test",
+        "clear": "docker compose exec booking_api php artisan config:clear && docker compose exec booking_api php artisan cache:clear && docker compose exec booking_api php artisan route:clear",
+        "log": "docker compose exec booking_api tail -f storage/logs/laravel.log"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
