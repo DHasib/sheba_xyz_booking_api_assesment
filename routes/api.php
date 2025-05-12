@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     ServiceController,
     RoleController,
     CategoryController,
-    BookingController
+    BookingController,
+    DiscountController
 };
 
 
@@ -37,6 +38,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::apiResource('services', ServiceController::class)->only(['store', 'update', 'destroy']);
     Route::apiResource('roles', RoleController::class);
     Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('discounts', DiscountController::class);
     Route::apiResource('bookings', BookingController::class)->only(['index']);
     Route::put('bookings/status/update', [BookingController::class, 'updateBookingStatus']);
     Route::post('/register/employee', [AuthController::class, 'employeeRegistration']);
