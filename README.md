@@ -68,7 +68,7 @@ When the command finishes, the API is available at **[http://localhost:8008](htt
 **3 · Daily workflow cheatsheet**
 
 | Task                                    | MAKE Command            | NPM Script Command          |  
-| --------------------------------------- | ----------------------- |                             |
+| --------------------------------------- | ----------------------- | --------------------------- |
 | Rebuild images after Dockerfile changes | `make build`            |  `npm run build`            |
 | Start/stop containers                   | `make up` / `make stop` |  `npm run up /npm run stop` |
 | Drop DB & reseed                        | `make migrate`          |  `npm run install`          |
