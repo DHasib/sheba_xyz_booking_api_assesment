@@ -18,11 +18,6 @@ class Discount extends Model
         'end_date',
     ];
 
-    // protected $casts = [
-    //     'start_date' => 'date',
-    //     'end_date'   => 'date',
-    // ];
-
     /**
      * A discount belongs to a service.
      */

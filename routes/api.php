@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('bookings', BookingController::class)->only(['index']);
     Route::put('bookings/status/update', [BookingController::class, 'updateBookingStatus']);
+    Route::post('/register/employee', [AuthController::class, 'employeeRegistration']);
 });
 
 
@@ -155,7 +156,6 @@ Route::middleware(['auth:sanctum', 'role:employee'])->group(function () {
  */
 Route::withoutMiddleware(['auth:sanctum', RoleCheck::class,])->group(function () {
     Route::post('/register', [AuthController::class, 'customerRegistration']);
-    Route::post('/register/employee', [AuthController::class, 'employeeRegistration']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::apiResource('services', ServiceController::class)->only(['index', 'show']);
 
